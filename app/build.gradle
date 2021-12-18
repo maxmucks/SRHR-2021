@@ -92,4 +92,7 @@ dependencies {
 
     //Shimmer effect
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+    //YouTube download
+    implementation 'com.github.HaarigerHarald:android-youtubeExtractor:master-SNAPSHOT'
 }

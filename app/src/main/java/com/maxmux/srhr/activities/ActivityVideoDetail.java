@@ -3,14 +3,25 @@ package com.maxmux.srhr.activities;
 import static com.maxmux.srhr.utils.Constant.BANNER_POST_DETAIL;
 import static com.maxmux.srhr.utils.Constant.NATIVE_AD_POST_DETAIL;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,14 +35,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.multidex.BuildConfig;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.maxmux.srhr.BuildConfig;
 import com.maxmux.srhr.R;
 import com.maxmux.srhr.adapters.AdapterSuggested;
 import com.maxmux.srhr.callbacks.CallbackVideoDetail;
@@ -58,6 +71,8 @@ import org.ocpsoft.prettytime.PrettyTime;
 import java.util.Date;
 import java.util.List;
 
+import at.huber.youtubeExtractor.YouTubeUriExtractor;
+import at.huber.youtubeExtractor.YtFile;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -80,6 +95,10 @@ public class ActivityVideoDetail extends AppCompatActivity {
     ImageButton image_favorite, btn_share;
     AdsPref adsPref;
     AdNetwork adNetwork;
+    String youTubeURL = null;
+
+    String WritePermission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+    String ReadPermission = Manifest.permission.READ_EXTERNAL_STORAGE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -243,27 +262,88 @@ public class ActivityVideoDetail extends AppCompatActivity {
 
         video_thumbnail.setOnClickListener(view -> {
 
-            if (Tools.isNetworkAvailable(ActivityVideoDetail.this)) {
 
-                if (post.video_type != null && post.video_type.equals("youtube")) {
-                    Intent intent = new Intent(getApplicationContext(), ActivityYoutubePlayer.class);
-                    intent.putExtra(Constant.KEY_VIDEO_ID, post.video_id);
-                    startActivity(intent);
-                } else if (post.video_type != null && post.video_type.equals("Upload")) {
-                    Intent intent = new Intent(getApplicationContext(), ActivityVideoPlayer.class);
-                    intent.putExtra("url", sharedPref.getApiUrl() + "/upload/video/" + post.video_url);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(getApplicationContext(), ActivityVideoPlayer.class);
-                    intent.putExtra("url", post.video_url);
-                    startActivity(intent);
-                }
+                // Build an AlertDialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(ActivityVideoDetail.this);
 
-                loadViewed();
+                // Set a title for alert dialog
+                builder.setTitle("PLAY VIDEO");
 
-            } else {
-                Toast.makeText(getApplicationContext(), getResources().getString(R.string.network_required), Toast.LENGTH_SHORT).show();
-            }
+                // Ask the final question
+                builder.setMessage("Do you want to download or play online?");
+
+                // Set the alert dialog yes button click listener
+                builder.setPositiveButton("Download", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do something when user clicked the Yes button
+                        // Set the TextView visibility GONE
+
+
+
+                        if (Tools.isNetworkAvailable(ActivityVideoDetail.this)) {
+
+
+                            if (post.video_type != null && post.video_type.equals("youtube")) {
+                                ytvdownload(null);
+                            }
+
+                            loadViewed();
+
+                        } else {
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.network_required), Toast.LENGTH_SHORT).show();
+                        }
+
+
+
+                        Toast.makeText(getApplicationContext(),
+                                "You clicked Download",Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                // Set the alert dialog no button click listener
+                builder.setNegativeButton("Online", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do something when No button clicked
+                        Toast.makeText(getApplicationContext(),
+                                "You clicked online",Toast.LENGTH_SHORT).show();
+                        if (Tools.isNetworkAvailable(ActivityVideoDetail.this)) {
+
+                            if (post.video_type != null && post.video_type.equals("youtube")) {
+                                Intent intent = new Intent(getApplicationContext(), ActivityYoutubePlayer.class);
+                                intent.putExtra(Constant.KEY_VIDEO_ID, post.video_id);
+                                startActivity(intent);
+                            } else if (post.video_type != null && post.video_type.equals("Upload")) {
+                                Intent intent = new Intent(getApplicationContext(), ActivityVideoPlayer.class);
+                                intent.putExtra("url", sharedPref.getApiUrl() + "/upload/video/" + post.video_url);
+                                startActivity(intent);
+                            } else {
+                                Intent intent = new Intent(getApplicationContext(), ActivityVideoPlayer.class);
+                                intent.putExtra("url", post.video_url);
+                                startActivity(intent);
+                            }
+
+                            loadViewed();
+
+                        } else {
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.network_required), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                // Display the alert dialog on interface
+                dialog.show();
+
+
+
+
+
+
+
+
+
 
         });
 
@@ -372,6 +452,89 @@ public class ActivityVideoDetail extends AppCompatActivity {
         txt_category.setText(post.category_name);
 
     }
+
+
+
+
+    public void YouTubeVideoDownloadF(int iTag){
+
+        if (ActivityCompat.checkSelfPermission(this, WritePermission) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, ReadPermission) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{WritePermission, ReadPermission}, 1);
+        } else {
+
+            YTDownload(iTag);
+        }
+    }
+
+    public void YTDownload(final int itag) {
+        String VideoURLDownload = youTubeURL;
+        @SuppressLint("StaticFieldLeak") YouTubeUriExtractor youTubeUriExtractor = new YouTubeUriExtractor(this) {
+            @Override
+            public void onUrisAvailable(String videoId, final String videoTitle, SparseArray<YtFile> ytFiles) {
+                if ((ytFiles != null)) {
+                    String downloadURL = ytFiles.get(itag).getUrl();
+                    Log.e("Download URL: ", downloadURL);
+                    if(itag==18 || itag == 22) {
+                        String mp4=".mp4";
+                        DownloadManagingF(downloadURL, videoTitle,mp4);
+                    }else if (itag == 251){
+                        String mp3=".mp3";
+                        DownloadManagingF(downloadURL,videoTitle,mp3);
+                    }
+
+                } else Toast.makeText(ActivityVideoDetail.this, "Error With URL", Toast.LENGTH_LONG).show();
+            }
+        };
+        youTubeUriExtractor.execute(VideoURLDownload);
+    }
+
+    public void DownloadManagingF(String downloadURL, String videoTitle,String extentiondwn){
+        if (downloadURL != null) {
+            DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(downloadURL));
+            request.setTitle(videoTitle);
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, videoTitle + extentiondwn);
+            if (downloadManager != null) {
+                Toast.makeText(getApplicationContext(),"Downloading...",Toast.LENGTH_SHORT).show();
+                downloadManager.enqueue(request);
+            }
+            BroadcastReceiver onComplete = new BroadcastReceiver() {
+                public void onReceive(Context ctxt, Intent intent) {
+                    Toast.makeText(getApplicationContext(),"Download Completed",Toast.LENGTH_SHORT).show();
+
+                    Uri selectedUri = Uri.parse(Environment.getExternalStorageDirectory() + "/Download/YouTube-Downloader/");
+                    Intent intentop = new Intent(Intent.ACTION_VIEW);
+                    intentop.setDataAndType(selectedUri, "resource/folder");
+
+                    if (intentop.resolveActivityInfo(getPackageManager(), 0) != null)
+                    {
+                        startActivity(intentop);
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(),"Saved on: Deafop",Toast.LENGTH_LONG).show();
+                        // restartApp();
+                    }
+                    unregisterReceiver(this);
+                    finish();
+                }
+            };
+            registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+
+        }
+    }
+
+    public void ytvdownload(View view) {
+        youTubeURL = post.video_url;
+        if (youTubeURL.contains("http")) {
+            YouTubeVideoDownloadF(18);
+        }
+        else Toast.makeText(this,"Enter URL First",Toast.LENGTH_LONG).show();
+    }
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
@@ -492,5 +655,6 @@ public class ActivityVideoDetail extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
     }
+
 
 }

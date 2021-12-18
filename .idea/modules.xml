@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/YourVideosChannel.iml" filepath="$PROJECT_DIR$/.idea/modules/YourVideosChannel.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/YourVideosChannel.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/YourVideosChannel.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/maxmux.iml" filepath="$PROJECT_DIR$/.idea/modules/maxmux.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/maxmux.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/maxmux.app.iml" />
     </modules>
   </component>
 </project>
