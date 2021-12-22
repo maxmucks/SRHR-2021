@@ -28,6 +28,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.maxmux.srhr.BuildConfig;
 import com.maxmux.srhr.R;
 import com.maxmux.srhr.config.AppConfig;
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
     public ImageButton btn_sort;
     CoordinatorLayout coordinatorLayout;
     AdsPref adsPref;
+    FloatingActionButton pDF;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,6 +166,14 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        pDF = findViewById(R.id.pDF);
+        pDF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pDDFDownload();
+            }
+        });
+
         AppBarLayout appBarLayout = findViewById(R.id.appbarLayout);
         ((CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams()).setBehavior(new AppBarLayoutBehavior());
 
@@ -191,6 +201,12 @@ public class MainActivity extends AppCompatActivity {
         adNetwork.loadInterstitialAdNetwork(INTERSTITIAL_POST_LIST);
 
         initToolbarIcon();
+
+    }
+
+    private void pDDFDownload() {
+
+        String URL = "http://deafopkenyavideos.deafopkenya.org/videos/APP_SCRIPT.pdf";
 
     }
 

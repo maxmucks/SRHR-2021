@@ -505,7 +505,7 @@ public class ActivityVideoDetail extends AppCompatActivity {
                         if (file.exists()){
                             Toast.makeText(getApplicationContext(), DIRECTORY_DOWNLOADS + vidFilename + "/n exists", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), ActivityVideoPlayer.class);
-                            intent.putExtra("url", post.video_url);
+                            intent.putExtra("url", file.toString());
                             startActivity(intent);
 
                     }else if (itag == 251){
@@ -514,7 +514,6 @@ public class ActivityVideoDetail extends AppCompatActivity {
                             ytvdownload(null);
 
                         }
-              //          DownloadManagingF(downloadURL,videoTitle,mp3);
                     }
 
 
