@@ -4,7 +4,7 @@
     <string name="app_name">Maxmux SRHR</string>
 
     <!--bottom navigation title-->
-    <string name="title_nav_home">Home</string>
+    <string name="title_nav_home">Recent</string>
     <string name="title_nav_category">Category</string>
     <string name="title_nav_favorite">Favorite</string>
     <string name="title_nav_settings">Settings</string>
@@ -74,5 +74,6 @@
     <string name="search_text">Search&#8230;</string>
     <string name="txt_suggested">Suggested</string>
     <string name="press_again_to_exit">Press again to exit app</string>
+    <string name="playOnline">Do you want to Download or Play Online?</string>
 
 </resources>

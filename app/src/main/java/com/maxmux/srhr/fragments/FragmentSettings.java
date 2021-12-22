@@ -1,22 +1,16 @@
 package com.maxmux.srhr.fragments;
 
-import static com.maxmux.srhr.utils.Constant.CATEGORY_GRID_2_COLUMN;
-import static com.maxmux.srhr.utils.Constant.CATEGORY_GRID_3_COLUMN;
-import static com.maxmux.srhr.utils.Constant.CATEGORY_LIST;
-import static com.maxmux.srhr.utils.Constant.VIDEO_LIST_COMPACT;
-import static com.maxmux.srhr.utils.Constant.VIDEO_LIST_DEFAULT;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
 import com.maxmux.srhr.BuildConfig;
@@ -25,12 +19,17 @@ import com.maxmux.srhr.activities.ActivityPrivacyPolicy;
 import com.maxmux.srhr.activities.MainActivity;
 import com.maxmux.srhr.utils.SharedPref;
 
+import static com.maxmux.srhr.utils.Constant.CATEGORY_GRID_2_COLUMN;
+import static com.maxmux.srhr.utils.Constant.CATEGORY_GRID_3_COLUMN;
+import static com.maxmux.srhr.utils.Constant.CATEGORY_LIST;
+import static com.maxmux.srhr.utils.Constant.VIDEO_LIST_COMPACT;
+import static com.maxmux.srhr.utils.Constant.VIDEO_LIST_DEFAULT;
+
 public class FragmentSettings extends Fragment {
 
     View root_view, parent_view;
     SharedPref sharedPref;
-    Switch switch_theme;
-    Switch switch_list;
+    SwitchCompat switch_theme;
     TextView txt_current_video_list;
     TextView txt_current_category_list;
 

@@ -205,10 +205,10 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    viewPager.setCurrentItem(0);
+                    viewPager.setCurrentItem(1);
                     return true;
                 case R.id.navigation_category:
-                    viewPager.setCurrentItem(1);
+                    viewPager.setCurrentItem(0);
                     return true;
                 case R.id.navigation_favorite:
                     viewPager.setCurrentItem(2);
@@ -236,10 +236,10 @@ public class MainActivity extends AppCompatActivity {
                 navigation.getMenu().getItem(position).setChecked(true);
                 prevMenuItem = navigation.getMenu().getItem(position);
 
-                if (viewPager.getCurrentItem() == 0) {
+                if (viewPager.getCurrentItem() == 1) {
                     title_toolbar.setText(getResources().getString(R.string.app_name));
                     showSortMenu(true);
-                } else if (viewPager.getCurrentItem() == 1) {
+                } else if (viewPager.getCurrentItem() == 0) {
                     title_toolbar.setText(getResources().getString(R.string.app_name));
                     //title_toolbar.setText(getResources().getString(R.string.title_nav_category));
                     showSortMenu(false);
@@ -298,10 +298,10 @@ public class MainActivity extends AppCompatActivity {
                 navigation.getMenu().getItem(position).setChecked(true);
                 prevMenuItem = navigation.getMenu().getItem(position);
 
-                if (viewPagerRTL.getCurrentItem() == 0) {
+                if (viewPagerRTL.getCurrentItem() == 1) {
                     title_toolbar.setText(getResources().getString(R.string.app_name));
                     showSortMenu(true);
-                } else if (viewPagerRTL.getCurrentItem() == 1) {
+                } else if (viewPagerRTL.getCurrentItem() == 0) {
                     title_toolbar.setText(getResources().getString(R.string.app_name));
                     //title_toolbar.setText(getResources().getString(R.string.title_nav_category));
                     showSortMenu(false);
@@ -346,9 +346,9 @@ public class MainActivity extends AppCompatActivity {
 
             switch (position) {
                 case 0:
-                    return new FragmentRecent();
-                case 1:
                     return new FragmentCategory();
+                case 1:
+                    return new FragmentRecent();
                 case 2:
                     return new FragmentFavorite();
                 case 3:

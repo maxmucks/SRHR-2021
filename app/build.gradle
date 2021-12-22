@@ -95,4 +95,7 @@ dependencies {
 
     //YouTube download
     implementation 'com.github.HaarigerHarald:android-youtubeExtractor:master-SNAPSHOT'
+
+    //Custom Dialog
+    implementation 'com.github.droidhubworld:custom_dialog:2.0.0'
 }
