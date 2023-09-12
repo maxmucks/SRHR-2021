@@ -5,12 +5,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 33
     defaultConfig {
-        applicationId "com.maxmux.srhr"
+        applicationId "org.deafop.srhr_signlanguage"
         minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 10
+        targetSdkVersion 33
+        versionCode 15
         versionName "4.2.0"
         multiDexEnabled true
     }
@@ -24,10 +24,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    lintOptions {
+    useLibrary 'org.apache.http.legacy'
+    lint {
         disable 'GradleDependency'
     }
-    useLibrary 'org.apache.http.legacy'
+    namespace 'org.deafop.srhr_signlanguage'
 }
 
 /* IMPORTANT : Highly recommended to keep the library version
@@ -94,8 +95,9 @@ dependencies {
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
     //YouTube download
-    implementation 'com.github.HaarigerHarald:android-youtubeExtractor:master-SNAPSHOT'
+    implementation 'com.github.HaarigerHarald:android-youtubeExtractor:v2.1.0'
 
     //Custom Dialog
     implementation 'com.github.droidhubworld:custom_dialog:2.0.0'
+    implementation 'com.google.firebase:firebase-database:20.0.4'
 }

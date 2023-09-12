@@ -107,13 +107,13 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.maxmux.srhr.utils.RtlViewPager
+        <org.deafop.srhr_signlanguage.utils.RtlViewPager
             android:id="@+id/viewpager_rtl"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" >
 
-        </com.maxmux.srhr.utils.RtlViewPager>
+        </org.deafop.srhr_signlanguage.utils.RtlViewPager>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

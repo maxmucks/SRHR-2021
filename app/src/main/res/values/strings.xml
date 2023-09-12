@@ -1,7 +1,7 @@
 <resources>
 
     <!--application name-->
-    <string name="app_name">Maxmux SRHR</string>
+    <string name="app_name">SRHR Sign Language</string>
 
     <!--bottom navigation title-->
     <string name="title_nav_home">Recent</string>
@@ -10,7 +10,7 @@
     <string name="title_nav_settings">Settings</string>
 
     <!-- play store application link i.e more apps -->
-    <string name="play_more_apps">https://play.google.com/store/apps/developer?id=deafop</string>
+    <string name="play_more_apps">https://play.google.com/store/apps/developer?id=Deafop+Kenya</string>
     <string name="privacy_policy_url">https://privacypolicies.com/privacy/view/c51c78f03631c7591d817e9d0c30c84c</string>
 
     <!--settings-->
@@ -33,7 +33,7 @@
     <string name="sub_title_setting_about">App Info, Build Version, Copyright</string>
     <string name="about_app_privacy_policy">Terms &amp; Policies</string>
     <string name="sub_about_app_version">Version</string>
-    <string name="sub_about_app_copyright">Copyright &#169; 2021 Maxmux Solutions \n All rights reserved</string>
+    <string name="sub_about_app_copyright">Copyright &#169; 2023 Deaf Outreach Program \n All rights reserved</string>
 
     <!--network & error message-->
     <string name="whops">Whoops!</string>
@@ -75,5 +75,10 @@
     <string name="txt_suggested">Suggested</string>
     <string name="press_again_to_exit">Press again to exit app</string>
     <string name="playOnline">Do you want to Download or Play Online?</string>
+
+    <string name="first_instruct">Please Login Or Skip</string>
+    <string name="first_name">Enter Your Name</string>
+    <string name="first_phone">Enter Phone Number</string>
+
 
 </resources>

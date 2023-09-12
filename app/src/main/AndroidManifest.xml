@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.maxmux.srhr">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -16,7 +15,7 @@
     </queries>
 
     <application
-        android:name="com.maxmux.srhr.activities.MyApplication"
+        android:name="org.deafop.srhr_signlanguage.activities.MyApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,54 +24,70 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name="org.deafop.srhr_signlanguage.activities.ActivityCountries"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/admob_app_id" />
-
         <meta-data
             android:name="applovin.sdk.key"
             android:value="@string/applovin_sdk_key" />
 
         <activity
-            android:name="com.maxmux.srhr.activities.ActivitySplash"
-            android:configChanges="orientation|keyboardHidden|screenSize">
+            android:name="org.deafop.srhr_signlanguage.activities.ActivitySplash"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.maxmux.srhr.activities.MainActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize">
+            android:name="org.deafop.srhr_signlanguage.activities.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.maxmux.srhr.activities.ActivityVideoDetailOffline"
+            android:name="org.deafop.srhr_signlanguage.activities.ActivityVideoDetailOffline"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="com.maxmux.srhr.activities.ActivityVideoByCategory"
+            android:name="org.deafop.srhr_signlanguage.activities.ActivityVideoByCategory"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="com.maxmux.srhr.activities.ActivitySearch"
+            android:name="org.deafop.srhr_signlanguage.activities.ActivitySearch"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="com.maxmux.srhr.activities.ActivityPrivacyPolicy"
+            android:name="org.deafop.srhr_signlanguage.activities.ActivityPrivacyPolicy"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="com.maxmux.srhr.activities.ActivityVideoPlayer"
+            android:name="org.deafop.srhr_signlanguage.activities.ActivityVideoPlayer"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="com.maxmux.srhr.activities.ActivityYoutubePlayer"
+            android:name="org.deafop.srhr_signlanguage.activities.ActivityYoutubePlayer"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="com.maxmux.srhr.activities.ActivityVideoDetail"
+            android:name="org.deafop.srhr_signlanguage.activities.ActivityVideoDetail"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="com.maxmux.srhr.activities.ActivityNotificationDetail"
+            android:name="org.deafop.srhr_signlanguage.activities.ActivityNotificationDetail"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity
+            android:name="org.deafop.srhr_signlanguage.activities.FirstTime"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity
+            android:name="org.deafop.srhr_signlanguage.activities.ActivityLogin"
             android:configChanges="orientation|keyboardHidden|screenSize" />
 
         <meta-data
@@ -84,7 +99,7 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
 
         <service
-            android:name="com.maxmux.srhr.notification.MyFirebaseMessageService"
+            android:name="org.deafop.srhr_signlanguage.notification.MyFirebaseMessageService"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
@@ -95,15 +110,12 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_stat_onesignal_default" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorPrimary" />
-
         <meta-data
             android:name="com.onesignal.NotificationServiceExtension"
-            android:value="com.maxmux.srhr.notification.NotificationServiceExtension" />
-
+            android:value="org.deafop.srhr_signlanguage.notification.NotificationServiceExtension" />
         <meta-data
             android:name="com.onesignal.NotificationOpened.DEFAULT"
             android:value="DISABLE" />
@@ -111,7 +123,6 @@
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
-
     </application>
 
 </manifest>

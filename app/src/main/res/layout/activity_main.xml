@@ -13,11 +13,12 @@
         android:layout_alignRight="@id/lyt_bottom"
         android:layout_alignBottom="@id/coordinatorLayout"
         android:layout_alignParentBottom="true"
-        android:background="#198FED"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="80dp"
+        android:background="#198FED"
         android:clickable="true"
-        app:srcCompat="@drawable/pdf"  />
+        app:backgroundTint="@color/colorPrimary"
+        app:srcCompat="@drawable/pdf" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
@@ -82,15 +83,15 @@
 
                     <ImageButton
                         android:id="@+id/btn_sort"
-                        android:layout_width="@dimen/spacing_xxlarge"
-                        android:layout_height="@dimen/spacing_xxlarge"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
                         android:background="?selectableItemBackgroundBorderless"
                         android:src="@drawable/ic_sort" />
 
                     <ImageButton
                         android:id="@+id/btn_search"
-                        android:layout_width="@dimen/spacing_xxlarge"
-                        android:layout_height="@dimen/spacing_xxlarge"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
                         android:background="?selectableItemBackgroundBorderless"
                         android:src="@drawable/ic_search" />
 
