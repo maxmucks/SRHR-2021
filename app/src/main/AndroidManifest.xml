@@ -15,7 +15,7 @@
     </queries>
 
     <application
-        android:name="org.deafop.srhr_signlanguage.activities.MyApplication"
+        android:name=".activities.MyApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,7 +25,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="org.deafop.srhr_signlanguage.activities.ActivityCountries"
+            android:name=".activities.ActivityCountries"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -40,7 +40,7 @@
             android:value="@string/applovin_sdk_key" />
 
         <activity
-            android:name="org.deafop.srhr_signlanguage.activities.ActivitySplash"
+            android:name=".activities.ActivitySplash"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true">
             <intent-filter>
@@ -50,7 +50,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.deafop.srhr_signlanguage.activities.MainActivity"
+            android:name=".activities.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true">
             <intent-filter>
@@ -60,34 +60,40 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.deafop.srhr_signlanguage.activities.ActivityVideoDetailOffline"
+            android:name=".activities.ActivityVideoDetailOffline"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="org.deafop.srhr_signlanguage.activities.ActivityVideoByCategory"
+            android:name=".activities.ActivityVideoByCategory"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="org.deafop.srhr_signlanguage.activities.ActivitySearch"
+            android:name=".activities.ActivitySearch"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="org.deafop.srhr_signlanguage.activities.ActivityPrivacyPolicy"
+            android:name=".activities.ActivityPrivacyPolicy"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="org.deafop.srhr_signlanguage.activities.ActivityVideoPlayer"
+            android:name=".activities.ActivityVideoPlayer"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="org.deafop.srhr_signlanguage.activities.ActivityYoutubePlayer"
+            android:name=".activities.ActivityYoutubePlayer"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenSize"/>
+        <activity
+            android:name=".activities.ActivityVideoDetail"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="org.deafop.srhr_signlanguage.activities.ActivityVideoDetail"
+            android:name=".activities.ActivityNotificationDetail"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="org.deafop.srhr_signlanguage.activities.ActivityNotificationDetail"
+            android:name=".activities.FirstTime"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="org.deafop.srhr_signlanguage.activities.FirstTime"
+            android:name=".activities.ActivityLogin"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name="org.deafop.srhr_signlanguage.activities.ActivityLogin"
+            android:name=".activities.ActivityUganda"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity
+            android:name=".activities.ActivityZimbambwe"
             android:configChanges="orientation|keyboardHidden|screenSize" />
 
         <meta-data

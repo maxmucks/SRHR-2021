@@ -8,23 +8,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 
 import org.deafop.srhr_signlanguage.R;
 import org.deafop.srhr_signlanguage.config.AppConfig;
 import org.deafop.srhr_signlanguage.utils.AdsPref;
 import org.deafop.srhr_signlanguage.utils.Constant;
-import com.google.android.youtube.player.YouTubeBaseActivity;
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayer.Provider;
-import com.google.android.youtube.player.YouTubePlayerView;
+import org.deafop.srhr_signlanguage.utils.CustomWebChromeClient;
 
-public class ActivityYoutubePlayer extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
+public class ActivityYoutubePlayer extends AppCompatActivity {
 
     private static final int RECOVERY_REQUEST = 1;
-    private YouTubePlayerView youTubeView;
-    private MyPlayerStateChangeListener playerStateChangeListener;
+    private WebView youTube;
     private String str_video_id;
     AdsPref adsPref;
 
@@ -48,43 +47,29 @@ public class ActivityYoutubePlayer extends YouTubeBaseActivity implements YouTub
             //str_vid = intent.getStringExtra(Constant.KEY_VID);
         }
 
+
         //loadViewed();
 
-        youTubeView = findViewById(R.id.youtube_view);
-        youTubeView.initialize(adsPref.getYoutubeAPIKey(), this);
+        youTube = findViewById(R.id.youtube_view);
+        youTube.getSettings().setJavaScriptEnabled(true);
+        youTube.setWebViewClient(new WebViewClient());
+        youTube.setWebChromeClient(new CustomWebChromeClient(ActivityYoutubePlayer.this));
 
-        playerStateChangeListener = new MyPlayerStateChangeListener();
+
+        String videoId = str_video_id;
+
+        String htmlCode = "<html><body style='margin:0;padding:0;'><iframe allow='fullscreen;' id='player' type='text/html' width='100%' height='100%' src='https://www.youtube.com/embed/" + videoId + "?enablejsapi=1' frameborder='0'></iframe></body></html>";
+
+        // webView.loadUrl("https://www.youtube.com");
+        youTube.loadDataWithBaseURL(null, htmlCode, "text/html", "UTF-8", null);
+
+
+
 
     }
 
-    @Override
-    public void onInitializationSuccess(Provider provider, YouTubePlayer player, boolean wasRestored) {
-        player.setPlayerStateChangeListener(playerStateChangeListener);
-        if (!wasRestored) {
-            player.loadVideo(str_video_id);
-        }
-    }
 
-    @Override
-    public void onInitializationFailure(Provider provider, YouTubeInitializationResult errorReason) {
-        if (errorReason.isUserRecoverableError()) {
-            errorReason.getErrorDialog(this, RECOVERY_REQUEST).show();
-        } else {
-            Toast.makeText(this, getResources().getString(R.string.error_player), Toast.LENGTH_LONG).show();
-        }
-    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == RECOVERY_REQUEST) {
-            // Retry initialization if user performed a recovery action
-            getYouTubePlayerProvider().initialize(adsPref.getYoutubeAPIKey(), this);
-        }
-    }
-
-    protected Provider getYouTubePlayerProvider() {
-        return youTubeView;
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -97,39 +82,15 @@ public class ActivityYoutubePlayer extends YouTubeBaseActivity implements YouTub
         return super.onOptionsItemSelected(item);
     }
 
-    private static final class MyPlayerStateChangeListener implements YouTubePlayer.PlayerStateChangeListener {
 
-        @Override
-        public void onLoading() {
-            // Called when the player is loading a video
-            // At this point, it's not ready to accept commands affecting playback such as play() or pause()
-        }
 
-        @Override
-        public void onLoaded(String s) {
-            // Called when a video is done loading.
-            // Playback methods such as play(), pause() or seekToMillis(int) may be called after this callback.
-        }
 
-        @Override
-        public void onAdStarted() {
-            // Called when playback of an advertisement starts.
-        }
-
-        @Override
-        public void onVideoStarted() {
-            // Called when playback of the video starts.
-        }
-
-        @Override
-        public void onVideoEnded() {
-            // Called when the video reaches its end.
-            //showInterstitialAd();
-        }
-
-        @Override
-        public void onError(YouTubePlayer.ErrorReason errorReason) {
-            // Called when an error occurs.
+    @Override
+    public void onBackPressed() {
+        if (youTube.canGoBack()) {
+            youTube.goBack();
+        } else {
+            super.onBackPressed();
         }
     }
 

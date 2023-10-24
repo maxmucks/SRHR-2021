@@ -2,9 +2,9 @@
 <resources>
 
     <!--app main color-->
-    <color name="colorPrimary">#4CA2D7</color>
-    <color name="colorPrimaryDark">#4794A7</color>
-    <color name="colorAccent">#778910</color>
+    <color name="colorPrimary">#1264AD</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#1264AD</color>
     <color name="colorBackgroundLight">#FFFFFF</color>
 
     <!--dark theme color-->
@@ -33,5 +33,7 @@
     <color name="whatsapp4">#34b7f1</color>
     <color name="whiteCardColor">#fff</color>
     <color name="whiteTextColor">#fff</color>
+
+    <color name="grey_300">#E0E0E0</color>
 
 </resources>

@@ -4,9 +4,9 @@
     <string name="app_name">SRHR Sign Language</string>
 
     <!--bottom navigation title-->
+    <string name="title_nav_category">Topics</string>
+    <string name="title_nav_favorite">Movies</string>
     <string name="title_nav_home">Recent</string>
-    <string name="title_nav_category">Category</string>
-    <string name="title_nav_favorite">Favorite</string>
     <string name="title_nav_settings">Settings</string>
 
     <!-- play store application link i.e more apps -->
@@ -79,6 +79,11 @@
     <string name="first_instruct">Please Login Or Skip</string>
     <string name="first_name">Enter Your Name</string>
     <string name="first_phone">Enter Phone Number</string>
+
+    <string name="country">Country</string>
+    <string name="title_nav_referal">Referral Centers</string>
+
+    <string name="no_refferal_found" >Coming Soon</string>
 
 
 </resources>

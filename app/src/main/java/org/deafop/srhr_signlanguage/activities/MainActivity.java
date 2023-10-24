@@ -1,8 +1,12 @@
 package org.deafop.srhr_signlanguage.activities;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
@@ -15,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -27,6 +32,7 @@ import org.deafop.srhr_signlanguage.config.AppConfig;
 import org.deafop.srhr_signlanguage.fragments.FragmentCategory;
 import org.deafop.srhr_signlanguage.fragments.FragmentFavorite;
 import org.deafop.srhr_signlanguage.fragments.FragmentRecent;
+import org.deafop.srhr_signlanguage.fragments.FragmentRefferal;
 import org.deafop.srhr_signlanguage.fragments.FragmentSettings;
 import org.deafop.srhr_signlanguage.utils.AdNetwork;
 import org.deafop.srhr_signlanguage.utils.AdsPref;
@@ -42,14 +48,16 @@ import com.google.android.gms.ads.initialization.AdapterStatus;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.startapp.sdk.adsbase.StartAppAd;
 import com.startapp.sdk.adsbase.StartAppSDK;
 import com.unity3d.ads.IUnityAdsInitializationListener;
-import com.unity3d.ads.IUnityAdsListener;
 import com.unity3d.ads.UnityAds;
 
 import org.deafop.srhr_signlanguage.utils.Constant;
 
+import java.io.File;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -73,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
     CoordinatorLayout coordinatorLayout;
     AdsPref adsPref;
     FloatingActionButton pDF;
+    ImageButton btn_countries;
+    FloatingActionButton chat_us;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                     GDPR.updateConsentStatus(this);
                     break;
                 case Constant.UNITY:
-                    UnityAds.addListener(new IUnityAdsListener() {
+                   /* UnityAds.addListener(new IUnityAdsListener() {
                         @Override
                         public void onUnityAdsReady(String placementId) {
                             Log.d(TAG, placementId);
@@ -146,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.d(TAG, "Unity Ads Initialization Failed: [" + error + "] " + message);
                         }
                     });
-                    break;
+                    break;*/
                 case Constant.APPLOVIN:
                     AppLovinSdk.getInstance(this).setMediationProvider(AppLovinMediationProvider.MAX);
                     AppLovinSdk.getInstance(this).initializeSdk(config -> {
@@ -159,12 +169,49 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         }
+        btn_countries = (ImageButton) findViewById(R.id.btn_countries);
+        btn_countries.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
 
-        pDF = findViewById(R.id.pDF);
+                startActivity(new Intent(getApplicationContext(), ActivityCountries.class));
+            }
+        });
+        chat_us = findViewById(R.id.chatUs);
+        chat_us.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                String str = "https://api.whatsapp.com/send?phone=" + "+254 739890070";
+                try {
+                    MainActivity.this.getApplicationContext().getPackageManager().getPackageInfo("com.whatsapp", 1);
+                } catch (PackageManager.NameNotFoundException ex) {
+                    Toast.makeText(MainActivity.this, "Whatsapp app not installed in your phone", Toast.LENGTH_SHORT).show();
+                    ex.printStackTrace();
+                }
+                Intent intent = new Intent("android.intent.action.VIEW");
+                    intent.setData(Uri.parse(str));startActivity(intent);
+
+            }
+        });
+         pDF = findViewById(R.id.pDF);
         pDF.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pDDFDownload();
+            public void onClick(View view) {
+                Snackbar.make(MainActivity.this.view, (CharSequence) "PDF", BaseTransientBottomBar.LENGTH_LONG).setAction((CharSequence) "Action", (View.OnClickListener) null).show();
+                if (new File(MainActivity.this.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS) + "/App_Script.pdf").exists()) {
+                    Toast.makeText(MainActivity.this, "Exists", Toast.LENGTH_SHORT).show();
+                    File file = new File(MainActivity.this.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS) + "/App_Script.pdf");
+                    MainActivity mainActivity = MainActivity.this;
+                    Uri uriForFile = FileProvider.getUriForFile(mainActivity, MainActivity.this.getApplicationContext().getPackageName() + ".provider", file);
+                    Intent intent = new Intent("android.intent.action.VIEW");
+                    intent.setDataAndType(uriForFile, "application/pdf");
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    try {
+                        startActivity(intent);
+                    } catch (ActivityNotFoundException unused) {
+                        Toast.makeText(MainActivity.this, "No Application available to view PDF", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                  //  downloadAndOpenPDF();
+                }
             }
         });
 
@@ -214,17 +261,20 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setOffscreenPageLimit(pager_number);
         navigation.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    viewPager.setCurrentItem(1);
-                    return true;
                 case R.id.navigation_category:
                     viewPager.setCurrentItem(0);
                     return true;
                 case R.id.navigation_favorite:
                     viewPager.setCurrentItem(2);
                     return true;
-                case R.id.navigation_settings:
+                case R.id.navigation_home:
+                    viewPager.setCurrentItem(1);
+                    return true;
+                case R.id.navigation_referal:
                     viewPager.setCurrentItem(3);
+                    return true;
+                case R.id.navigation_settings:
+                    viewPager.setCurrentItem(4);
                     return true;
             }
             return false;
@@ -247,19 +297,22 @@ public class MainActivity extends AppCompatActivity {
                 prevMenuItem = navigation.getMenu().getItem(position);
 
                 if (viewPager.getCurrentItem() == 1) {
-                    title_toolbar.setText(getResources().getString(R.string.app_name));
+                    title_toolbar.setText(getResources().getString(R.string.title_nav_home));
                     showSortMenu(true);
                 } else if (viewPager.getCurrentItem() == 0) {
-                    title_toolbar.setText(getResources().getString(R.string.app_name));
+                    title_toolbar.setText(getResources().getString(R.string.title_nav_category));
                     //title_toolbar.setText(getResources().getString(R.string.title_nav_category));
+                    showSortMenu(false);
+                } else if (viewPager.getCurrentItem() == 4) {
+                    title_toolbar.setText(getResources().getString(R.string.title_nav_referal));
                     showSortMenu(false);
                 } else if (viewPager.getCurrentItem() == 2) {
                     title_toolbar.setText(getResources().getString(R.string.title_nav_favorite));
                     showSortMenu(false);
-                } else if (viewPager.getCurrentItem() == 3) {
-                    title_toolbar.setText(getResources().getString(R.string.title_nav_settings));
-                    showSortMenu(false);
-                }
+                }else if (viewPager.getCurrentItem() == 3) {
+                title_toolbar.setText(getResources().getString(R.string.title_nav_settings));
+                showSortMenu(false);
+            }
 
             }
 
@@ -276,17 +329,20 @@ public class MainActivity extends AppCompatActivity {
         viewPagerRTL.setOffscreenPageLimit(pager_number);
         navigation.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    viewPagerRTL.setCurrentItem(0);
-                    return true;
                 case R.id.navigation_category:
-                    viewPagerRTL.setCurrentItem(1);
+                    viewPagerRTL.setCurrentItem(0);
                     return true;
                 case R.id.navigation_favorite:
                     viewPagerRTL.setCurrentItem(2);
                     return true;
-                case R.id.navigation_settings:
+                case R.id.navigation_home:
+                    viewPagerRTL.setCurrentItem(1);
+                    return true;
+                case R.id.navigation_referal:
                     viewPagerRTL.setCurrentItem(3);
+                    return true;
+                case R.id.navigation_settings:
+                    viewPagerRTL.setCurrentItem(4);
                     return true;
             }
             return false;
@@ -309,16 +365,19 @@ public class MainActivity extends AppCompatActivity {
                 prevMenuItem = navigation.getMenu().getItem(position);
 
                 if (viewPagerRTL.getCurrentItem() == 1) {
-                    title_toolbar.setText(getResources().getString(R.string.app_name));
+                    title_toolbar.setText(getResources().getString(R.string.title_nav_home));
                     showSortMenu(true);
                 } else if (viewPagerRTL.getCurrentItem() == 0) {
-                    title_toolbar.setText(getResources().getString(R.string.app_name));
+                    title_toolbar.setText(getResources().getString(R.string.title_nav_category));
                     //title_toolbar.setText(getResources().getString(R.string.title_nav_category));
+                    showSortMenu(false);
+                } else if (viewPagerRTL.getCurrentItem() == 3) {
+                    title_toolbar.setText(getResources().getString(R.string.title_nav_referal));
                     showSortMenu(false);
                 } else if (viewPagerRTL.getCurrentItem() == 2) {
                     title_toolbar.setText(getResources().getString(R.string.title_nav_favorite));
                     showSortMenu(false);
-                } else if (viewPagerRTL.getCurrentItem() == 3) {
+                } else if (viewPagerRTL.getCurrentItem() == 4) {
                     title_toolbar.setText(getResources().getString(R.string.title_nav_settings));
                     showSortMenu(false);
                 }
@@ -363,6 +422,8 @@ public class MainActivity extends AppCompatActivity {
                     return new FragmentFavorite();
                 case 3:
                     return new FragmentSettings();
+                case 4:
+                    return new FragmentRefferal();
             }
             return null;
         }

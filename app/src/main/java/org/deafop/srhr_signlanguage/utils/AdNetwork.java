@@ -451,7 +451,7 @@ public class AdNetwork {
                     }
                     break;
                 case UNITY:
-                    if (UnityAds.isReady(adsPref.getUnityInterstitialPlacementId())) {
+                    /*if (UnityAds.isReady(adsPref.getUnityInterstitialPlacementId())) {
                         if (counter == interval) {
                             UnityAds.show(context, adsPref.getUnityInterstitialPlacementId(), new IUnityAdsShowListener() {
                                 @Override
@@ -479,7 +479,7 @@ public class AdNetwork {
                             counter++;
                         }
                     }
-                    break;
+                    break;*/
                 case APPLOVIN:
                     Log.d(TAG, "selected");
                     if (maxInterstitialAd.isReady()) {

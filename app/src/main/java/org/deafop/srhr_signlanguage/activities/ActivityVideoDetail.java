@@ -260,7 +260,8 @@ public class ActivityVideoDetail extends AppCompatActivity {
 
         video_thumbnail.setOnClickListener(view -> {
             //calling this method to show our android custom alert dialog
-            showCustomDialog();
+           // showCustomDialog();
+            playVideo();
         });
 
         video_description.setBackgroundColor(Color.TRANSPARENT);
@@ -325,7 +326,7 @@ public class ActivityVideoDetail extends AppCompatActivity {
         new Handler(Looper.getMainLooper()).postDelayed(() -> lyt_suggested.setVisibility(View.VISIBLE), 1000);
 
     }
-    private void showCustomDialog() {
+/*    private void showCustomDialog() {
         CommonMessageDialog dialog = new CommonMessageDialog.Builder(this)
                 .title("SRHR Sign Language")
                 .titleGravity(Gravity.CENTER)
@@ -397,7 +398,7 @@ public class ActivityVideoDetail extends AppCompatActivity {
                     }
                 }).build();
         dialog.show("Dialog");
-    }
+    }*/
     private void displaySuggested(List<Video> list) {
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view_suggested);
@@ -440,11 +441,7 @@ public class ActivityVideoDetail extends AppCompatActivity {
         txt_category.setText(post.category_name);
 
     }
-
-
-
-
-    public void YouTubeVideoDownloadF(int iTag){
+/*    public void YouTubeVideoDownloadF(int iTag){
 
         if (ActivityCompat.checkSelfPermission(this, WritePermission) != PackageManager.PERMISSION_GRANTED ||
                 ActivityCompat.checkSelfPermission(this, ReadPermission) != PackageManager.PERMISSION_GRANTED) {
@@ -453,9 +450,8 @@ public class ActivityVideoDetail extends AppCompatActivity {
 
             YTDownload(iTag);
         }
-    }
-
-    public void YTDownload(final int itag) {
+    }*/
+ /*   public void YTDownload(final int itag) {
         String VideoURLDownload = youTubeURL;
         @SuppressLint("StaticFieldLeak") YouTubeUriExtractor youTubeUriExtractor = new YouTubeUriExtractor(this) {
             @Override
@@ -477,18 +473,37 @@ public class ActivityVideoDetail extends AppCompatActivity {
         };
         youTubeUriExtractor.execute(VideoURLDownload);
 
-    }
-
-
-
-    public void ytvdownload(View view ) {
+    }*/
+/*    public void ytvdownload(View view ) {
             if (youTubeURL.contains("http")) {
                 YouTubeVideoDownloadF(18);
             }
+    }*/
+    public void playVideo(){
 
+        if (Tools.isNetworkAvailable(ActivityVideoDetail.this)) {
 
+            if (post.video_type != null && post.video_type.equals("youtube")) {
+                Intent intent = new Intent(getApplicationContext(), ActivityYoutubePlayer.class);
+                intent.putExtra(Constant.KEY_VIDEO_ID, post.video_id);
+                startActivity(intent);
+            } else if (post.video_type != null && post.video_type.equals("Upload")) {
+                Intent intent = new Intent(getApplicationContext(), ActivityVideoPlayer.class);
+                intent.putExtra("url", sharedPref.getApiUrl() + "/upload/video/" + post.video_url);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(getApplicationContext(), ActivityVideoPlayer.class);
+                intent.putExtra("url", post.video_url);
+                startActivity(intent);
+            }
+
+            loadViewed();
+
+        } else {
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.network_required), Toast.LENGTH_SHORT).show();
+        }
     }
-    public void openPlay(int itag){
+  /*  public void openPlay(int itag){
         youTubeURL = post.video_url;
         String VideoURLDownload = youTubeURL;
         @SuppressLint("StaticFieldLeak") YouTubeUriExtractor youTubeUriExtractor = new YouTubeUriExtractor(this) {
@@ -523,9 +538,8 @@ public class ActivityVideoDetail extends AppCompatActivity {
 
 
 
-    }
-
-    public void DownloadManagingF(String downloadURL, String videoTitle,String extentiondwn){
+    }*/
+   /* public void DownloadManagingF(String downloadURL, String videoTitle,String extentiondwn){
 
         if (downloadURL != null) {
             DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
@@ -563,9 +577,7 @@ public class ActivityVideoDetail extends AppCompatActivity {
 
         }
 
-    }
-
-
+    }*/
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);

@@ -10,8 +10,8 @@ android {
         applicationId "org.deafop.srhr_signlanguage"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 15
-        versionName "4.2.0"
+        versionCode 16
+        versionName "4.2.1"
         multiDexEnabled true
     }
     buildTypes {
@@ -30,6 +30,9 @@ android {
     }
     namespace 'org.deafop.srhr_signlanguage'
 }
+repositories {
+    mavenCentral()
+}
 
 /* IMPORTANT : Highly recommended to keep the library version
 Be careful when update dependencies, different library version may caused error */
@@ -37,7 +40,6 @@ dependencies {
     implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
 
     //AndroidX and Google Support libraries
-    implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -60,6 +62,8 @@ dependencies {
     implementation 'com.startapp:inapp-sdk:4.8.11'
     implementation 'com.applovin:applovin-sdk:10.3.3'
     implementation 'com.facebook.android:audience-network-sdk:6.7.0'
+
+    implementation 'com.unity3d.ads:unity-ads:4.7.0'
 
     //Ad network mediation
     implementation 'com.google.ads.mediation:facebook:6.6.0.0'

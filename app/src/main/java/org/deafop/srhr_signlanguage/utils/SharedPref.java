@@ -1,6 +1,6 @@
 package org.deafop.srhr_signlanguage.utils;
 
-import static org.deafop.srhr_signlanguage.utils.Constant.CATEGORY_GRID_3_COLUMN;
+import static org.deafop.srhr_signlanguage.utils.Constant.CATEGORY_LIST;
 import static org.deafop.srhr_signlanguage.utils.Constant.VIDEO_LIST_DEFAULT;
 
 import android.content.Context;
@@ -100,7 +100,7 @@ public class SharedPref {
     //CATEGORY_GRID_2_COLUMN for category grid (2 column)
     //CATEGORY_GRID_3_COLUMN for category grid (3 column)
     public Integer getCategoryViewType() {
-        return sharedPreferences.getInt("category_list", CATEGORY_GRID_3_COLUMN);
+        return sharedPreferences.getInt("category_list", CATEGORY_LIST);
     }
 
     public void updateCategoryViewType(int position) {
