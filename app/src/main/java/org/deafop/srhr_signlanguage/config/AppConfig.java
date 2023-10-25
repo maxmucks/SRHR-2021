@@ -3,8 +3,8 @@ package org.deafop.srhr_signlanguage.config;
 public class AppConfig {
 
     //your server key and rest api key which obtained from the admin panel
-    public static final String REST_API_KEY = "cda11PrbRezfI2BjM9vqV3g5HCWLSynOiuoYwaDNFE8lTUX4KQ";
-    public static final String SERVER_KEY = "WVVoU01HTklUVFpNZVRsNlkyazFhMXBYUm0xaU0wSnlXbGMxTlZsVE5YWmpiV04yV0RKR2QyTkhlSEJaTWtZd1lWYzVkVk5YVW1aaU0wcHVURzFTYkZsWFduWmpRelY2WTIxb2VWZ3pUbkJhTWpWeldWYzFibVJYUm01YVVUMDk=";
+    public static final String REST_API_KEY = "cda11QbXIO9Z4ly0a2khTFDPA3x6UgSVtCiYRjBqpsfL7w5neN";
+    public static final String SERVER_KEY = "WVVoU01HTklUVFpNZVRsNlkyMW9lVXh0VW14WlYxcDJZMGQwYkdKdWJHaE1iVGw1V25rNVpsbFlRbmRpUjJ4cVdWaFNjR0l5TlVwYVJqbDJZMjFqZFZwSFZtaGFiVGwzVEc1T2VXRklTbVpqTW14dVltMTRhR0p0WkRGWlYyUnM=";
 
     //layout customization
     public static final boolean FORCE_PLAYER_TO_LANDSCAPE = false;

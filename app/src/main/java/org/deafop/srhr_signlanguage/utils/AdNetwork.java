@@ -57,11 +57,6 @@ import com.startapp.sdk.ads.nativead.NativeAdPreferences;
 import com.startapp.sdk.ads.nativead.StartAppNativeAd;
 import com.startapp.sdk.adsbase.StartAppAd;
 import com.startapp.sdk.adsbase.adlisteners.AdEventListener;
-import com.unity3d.ads.IUnityAdsShowListener;
-import com.unity3d.ads.UnityAds;
-import com.unity3d.services.banners.BannerErrorInfo;
-import com.unity3d.services.banners.BannerView;
-import com.unity3d.services.banners.UnityBannerSize;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -205,35 +200,6 @@ public class AdNetwork {
                         }
                     });
                     startAppAdView.addView(banner);
-                    break;
-                case UNITY:
-                    RelativeLayout unityAdView = context.findViewById(R.id.unity_banner_view_container);
-                    BannerView bottomBanner = new BannerView(context, adsPref.getUnityBannerPlacementId(), new UnityBannerSize(UNITY_ADS_BANNER_WIDTH, UNITY_ADS_BANNER_HEIGHT));
-                    bottomBanner.setListener(new BannerView.IListener() {
-                        @Override
-                        public void onBannerLoaded(BannerView bannerView) {
-                            unityAdView.setVisibility(View.VISIBLE);
-                            Log.d("Unity_banner", "ready");
-                        }
-
-                        @Override
-                        public void onBannerClick(BannerView bannerView) {
-
-                        }
-
-                        @Override
-                        public void onBannerFailedToLoad(BannerView bannerView, BannerErrorInfo bannerErrorInfo) {
-                            Log.d("SupportTest", "Banner Error" + bannerErrorInfo);
-                            unityAdView.setVisibility(View.GONE);
-                        }
-
-                        @Override
-                        public void onBannerLeftApplication(BannerView bannerView) {
-
-                        }
-                    });
-                    unityAdView.addView(bottomBanner);
-                    bottomBanner.load();
                     break;
                 case APPLOVIN:
                     RelativeLayout appLovinAdView = context.findViewById(R.id.applovin_banner_view_container);

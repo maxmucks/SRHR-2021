@@ -84,6 +84,8 @@
     <string name="title_nav_referal">Referral Centers</string>
 
     <string name="no_refferal_found" >Coming Soon</string>
+    <string name="login">Login</string>
+    <string name="skip">Skip</string>
 
 
 </resources>

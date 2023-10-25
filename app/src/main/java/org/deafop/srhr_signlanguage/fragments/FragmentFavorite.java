@@ -65,7 +65,7 @@ public class FragmentFavorite extends Fragment {
 
         data = new ArrayList<>();
         for (int i = 0; i < FilmsData.nameArray.length; i++) {
-            data.add(new Films(FilmsData.nameArray[i], FilmsData.id_[i].intValue(), FilmsData.drawableArray[i].intValue()));
+            data.add(new Films(FilmsData.nameArray[i], FilmsData.id_[i], FilmsData.drawableArray[i]));
         }
         AdapterFilms adapterFilms1 = new AdapterFilms(data);
         recyclerView.setAdapter(adapterFilms1);

@@ -27,6 +27,7 @@ import androidx.multidex.BuildConfig;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import org.deafop.srhr_signlanguage.R;
 import org.deafop.srhr_signlanguage.config.AppConfig;
 import org.deafop.srhr_signlanguage.fragments.FragmentCategory;
@@ -41,6 +42,7 @@ import org.deafop.srhr_signlanguage.utils.GDPR;
 import org.deafop.srhr_signlanguage.utils.RtlViewPager;
 import org.deafop.srhr_signlanguage.utils.SharedPref;
 import org.deafop.srhr_signlanguage.utils.Tools;
+
 import com.applovin.sdk.AppLovinMediationProvider;
 import com.applovin.sdk.AppLovinSdk;
 import com.google.android.gms.ads.MobileAds;
@@ -52,8 +54,6 @@ import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.startapp.sdk.adsbase.StartAppAd;
 import com.startapp.sdk.adsbase.StartAppSDK;
-import com.unity3d.ads.IUnityAdsInitializationListener;
-import com.unity3d.ads.UnityAds;
 
 import org.deafop.srhr_signlanguage.utils.Constant;
 
@@ -71,10 +71,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView title_toolbar;
     MenuItem prevMenuItem;
     int pager_number = 4;
-//    SharedPreferences preferences;
+    //    SharedPreferences preferences;
     AdNetwork adNetwork;
     View view;
-//    String androidId;
+    //    String androidId;
     ImageButton btn_search;
     SharedPref sharedPref;
     public ImageButton btn_sort;
@@ -122,41 +122,6 @@ public class MainActivity extends AppCompatActivity {
                     });
                     GDPR.updateConsentStatus(this);
                     break;
-                case Constant.UNITY:
-                   /* UnityAds.addListener(new IUnityAdsListener() {
-                        @Override
-                        public void onUnityAdsReady(String placementId) {
-                            Log.d(TAG, placementId);
-                        }
-
-                        @Override
-                        public void onUnityAdsStart(String placementId) {
-
-                        }
-
-                        @Override
-                        public void onUnityAdsFinish(String placementId, UnityAds.FinishState finishState) {
-
-                        }
-
-                        @Override
-                        public void onUnityAdsError(UnityAds.UnityAdsError unityAdsError, String message) {
-
-                        }
-                    });
-                    UnityAds.initialize(getApplicationContext(), adsPref.getUnityGameId(), BuildConfig.DEBUG, new IUnityAdsInitializationListener() {
-                        @Override
-                        public void onInitializationComplete() {
-                            Log.d(TAG, "Unity Ads Initialization Complete");
-                            Log.d(TAG, "Unity Ads Game ID : " + adsPref.getUnityGameId());
-                        }
-
-                        @Override
-                        public void onInitializationFailed(UnityAds.UnityAdsInitializationError error, String message) {
-                            Log.d(TAG, "Unity Ads Initialization Failed: [" + error + "] " + message);
-                        }
-                    });
-                    break;*/
                 case Constant.APPLOVIN:
                     AppLovinSdk.getInstance(this).setMediationProvider(AppLovinMediationProvider.MAX);
                     AppLovinSdk.getInstance(this).initializeSdk(config -> {
@@ -187,11 +152,12 @@ public class MainActivity extends AppCompatActivity {
                     ex.printStackTrace();
                 }
                 Intent intent = new Intent("android.intent.action.VIEW");
-                    intent.setData(Uri.parse(str));startActivity(intent);
+                intent.setData(Uri.parse(str));
+                startActivity(intent);
 
             }
         });
-         pDF = findViewById(R.id.pDF);
+        pDF = findViewById(R.id.pDF);
         pDF.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Snackbar.make(MainActivity.this.view, (CharSequence) "PDF", BaseTransientBottomBar.LENGTH_LONG).setAction((CharSequence) "Action", (View.OnClickListener) null).show();
@@ -210,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "No Application available to view PDF", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                  //  downloadAndOpenPDF();
+                    //  downloadAndOpenPDF();
                 }
             }
         });
@@ -309,10 +275,10 @@ public class MainActivity extends AppCompatActivity {
                 } else if (viewPager.getCurrentItem() == 2) {
                     title_toolbar.setText(getResources().getString(R.string.title_nav_favorite));
                     showSortMenu(false);
-                }else if (viewPager.getCurrentItem() == 3) {
-                title_toolbar.setText(getResources().getString(R.string.title_nav_settings));
-                showSortMenu(false);
-            }
+                } else if (viewPager.getCurrentItem() == 3) {
+                    title_toolbar.setText(getResources().getString(R.string.title_nav_settings));
+                    showSortMenu(false);
+                }
 
             }
 
@@ -339,10 +305,10 @@ public class MainActivity extends AppCompatActivity {
                     viewPagerRTL.setCurrentItem(1);
                     return true;
                 case R.id.navigation_referal:
-                    viewPagerRTL.setCurrentItem(3);
+                    viewPagerRTL.setCurrentItem(4);
                     return true;
                 case R.id.navigation_settings:
-                    viewPagerRTL.setCurrentItem(4);
+                    viewPagerRTL.setCurrentItem(3);
                     return true;
             }
             return false;
@@ -371,13 +337,13 @@ public class MainActivity extends AppCompatActivity {
                     title_toolbar.setText(getResources().getString(R.string.title_nav_category));
                     //title_toolbar.setText(getResources().getString(R.string.title_nav_category));
                     showSortMenu(false);
-                } else if (viewPagerRTL.getCurrentItem() == 3) {
+                } else if (viewPagerRTL.getCurrentItem() == 4) {
                     title_toolbar.setText(getResources().getString(R.string.title_nav_referal));
                     showSortMenu(false);
                 } else if (viewPagerRTL.getCurrentItem() == 2) {
                     title_toolbar.setText(getResources().getString(R.string.title_nav_favorite));
                     showSortMenu(false);
-                } else if (viewPagerRTL.getCurrentItem() == 4) {
+                } else if (viewPagerRTL.getCurrentItem() == 3) {
                     title_toolbar.setText(getResources().getString(R.string.title_nav_settings));
                     showSortMenu(false);
                 }

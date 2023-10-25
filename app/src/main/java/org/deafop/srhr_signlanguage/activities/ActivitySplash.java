@@ -1,6 +1,5 @@
 package org.deafop.srhr_signlanguage.activities;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,13 +9,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.multidex.BuildConfig;
 
 import com.google.android.gms.ads.FullScreenContentCallback;
-import org.deafop.srhr_signlanguage.R;
 
+import org.deafop.srhr_signlanguage.R;
 import org.deafop.srhr_signlanguage.callbacks.CallbackAds;
 import org.deafop.srhr_signlanguage.config.AppConfig;
 import org.deafop.srhr_signlanguage.models.Ads;
@@ -55,7 +53,7 @@ public class ActivitySplash extends AppCompatActivity {
         adsPref = new AdsPref(this);
         img_splash = (ImageView) findViewById(R.id.img_splash);
         if (sharedPref.getIsDarkTheme().booleanValue()) {
-            img_splash.setImageResource(R.drawable.bg_splash_dark);
+            img_splash.setImageResource(R.drawable.bg_splash_default);
         } else {
             img_splash.setImageResource(R.drawable.bg_splash_default);
         }

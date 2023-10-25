@@ -10,7 +10,7 @@ public class FirstTime extends AppCompatActivity {
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         if (Boolean.valueOf(getSharedPreferences("PREFERENCE", 0).getBoolean("isFirstRun", true)).booleanValue()) {
-            startActivity(new Intent(this, ActivityLogin.class));
+            launchMainScreen();
             Toast.makeText(this, "First Run", Toast.LENGTH_LONG);
             finish();
         } else {

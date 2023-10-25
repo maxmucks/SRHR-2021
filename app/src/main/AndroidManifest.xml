@@ -53,11 +53,6 @@
             android:name=".activities.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activities.ActivityVideoDetailOffline"
@@ -85,9 +80,6 @@
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
             android:name=".activities.FirstTime"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
-        <activity
-            android:name=".activities.ActivityLogin"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
             android:name=".activities.ActivityUganda"
