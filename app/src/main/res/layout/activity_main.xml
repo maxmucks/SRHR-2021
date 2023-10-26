@@ -2,6 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -24,6 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:paddingEnd="@dimen/spacing_medium"
+                android:paddingStart="@dimen/spacing_medium"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:titleTextAppearance="@style/ToolbarFontStyle">
@@ -47,71 +49,82 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/app_name"
                                 android:maxLines="1"
-                                android:layout_alignParentLeft="true"
                                 android:layout_centerVertical="true"
                                 android:fontFamily="@font/custom_font"
                                 android:layout_alignParentStart="true" style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"/>
                         </RelativeLayout>
                     </LinearLayout>
+
                     <ImageButton
                         android:id="@+id/btn_sort"
-                        android:background="?attr/selectableItemBackgroundBorderless"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:src="@drawable/ic_sort"/>
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/title_sort"
+                        android:src="@drawable/ic_sort" />
+
                     <ImageButton
                         android:id="@+id/btn_search"
-                        android:background="?attr/selectableItemBackgroundBorderless"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:src="@drawable/ic_search"/>
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/search"
+                        android:src="@drawable/ic_search" />
+
                     <ImageButton
                         android:id="@+id/btn_countries"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
-                        android:layout_width="40dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/flag"/>
+                        android:src="@drawable/flag"
+                        tools:ignore="SpeakableTextPresentCheck"
+                        android:contentDescription="@string/country" />
                     <ImageButton
                         android:id="@+id/btn_overflow"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:visibility="gone"
                         android:layout_width="@dimen/spacing_xxlarge"
                         android:layout_height="@dimen/spacing_xxlarge"
-                        android:src="@drawable/ic_overflow"/>
+                        android:src="@drawable/ic_overflow" />
                 </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
+
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:ignore="SpeakableTextPresentCheck" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/lyt_bottom">
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/pDF"
-            android:background="@color/colorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:src="@drawable/pdf"
             android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/pdf"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="SpeakableTextPresentCheck" />
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/chatUs"
-            android:background="@color/whatsapp1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:src="@drawable/chat_us"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/whatsapp1"
+            android:src="@drawable/chat_us"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
     <LinearLayout
         android:orientation="vertical"

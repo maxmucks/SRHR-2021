@@ -79,6 +79,7 @@
     <string name="first_instruct">Please Login Or Skip</string>
     <string name="first_name">Enter Your Name</string>
     <string name="first_phone">Enter Phone Number</string>
+    <string name="btn_clear">Clear</string>
 
     <string name="country">Country</string>
     <string name="title_nav_referal">Referral Centers</string>

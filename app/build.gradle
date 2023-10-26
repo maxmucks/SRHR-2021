@@ -10,8 +10,8 @@ android {
         applicationId "org.deafop.srhr_signlanguage"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 18
-        versionName "4.2.2.1"
+        versionCode 19
+        versionName "4.2.2"
         multiDexEnabled true
     }
     buildTypes {
@@ -59,7 +59,7 @@ dependencies {
 
     //Ad network
     implementation 'com.google.android.gms:play-services-ads:20.3.0'
-    implementation 'com.startapp:inapp-sdk:4.8.11'
+    implementation 'com.startapp:inapp-sdk:4.11.0'
     implementation 'com.applovin:applovin-sdk:10.3.3'
     implementation 'com.facebook.android:audience-network-sdk:6.7.0'
 
@@ -102,4 +102,6 @@ dependencies {
     //Custom Dialog
     implementation 'com.github.droidhubworld:custom_dialog:2.0.0'
     implementation 'com.google.firebase:firebase-database:20.0.4'
+    // required to avoid crash on Android 12 API 31
+    implementation 'androidx.work:work-runtime-ktx:2.7.1'
 }
