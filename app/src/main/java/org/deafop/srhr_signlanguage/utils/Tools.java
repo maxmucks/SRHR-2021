@@ -8,20 +8,12 @@ import android.net.Network;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.util.Base64;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 
 import org.deafop.srhr_signlanguage.R;
 import org.deafop.srhr_signlanguage.activities.ActivityNotificationDetail;
 import org.deafop.srhr_signlanguage.activities.MainActivity;
-import com.google.ads.mediation.admob.AdMobAdapter;
-import com.google.ads.mediation.facebook.FacebookAdapter;
-import com.google.ads.mediation.facebook.FacebookExtras;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -71,23 +63,7 @@ public class Tools {
         Log.d("push_notification", "post id : " + post_id);
     }
 
-    public static AdRequest getAdRequest(Activity activity) {
-        Bundle extras = new FacebookExtras().setNativeBanner(true).build();
-        return new AdRequest.Builder()
-                .addNetworkExtrasBundle(AdMobAdapter.class, GDPR.getBundleAd(activity))
-                .addNetworkExtrasBundle(FacebookAdapter.class, extras)
-                .build();
-    }
 
-    public static AdSize getAdSize(Activity activity) {
-        Display display = activity.getWindowManager().getDefaultDisplay();
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        display.getMetrics(outMetrics);
-        float widthPixels = outMetrics.widthPixels;
-        float density = outMetrics.density;
-        int adWidth = (int) (widthPixels / density);
-        return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(activity, adWidth);
-    }
 
     public static String withSuffix(long count) {
         if (count < 1000) return "" + count;

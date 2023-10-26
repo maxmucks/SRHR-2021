@@ -1,8 +1,5 @@
 package org.deafop.srhr_signlanguage.activities;
 
-import static org.deafop.srhr_signlanguage.utils.Constant.BANNER_POST_DETAIL;
-import static org.deafop.srhr_signlanguage.utils.Constant.NATIVE_AD_POST_DETAIL;
-
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -40,8 +37,6 @@ import org.deafop.srhr_signlanguage.config.AppConfig;
 import org.deafop.srhr_signlanguage.databases.DatabaseHandlerFavorite;
 import org.deafop.srhr_signlanguage.models.Video;
 import org.deafop.srhr_signlanguage.rests.RestAdapter;
-import org.deafop.srhr_signlanguage.utils.AdNetwork;
-import org.deafop.srhr_signlanguage.utils.AdsPref;
 import org.deafop.srhr_signlanguage.utils.AppBarLayoutBehavior;
 import org.deafop.srhr_signlanguage.utils.Constant;
 import org.deafop.srhr_signlanguage.utils.SharedPref;
@@ -80,8 +75,6 @@ public class ActivityNotificationDetail extends AppCompatActivity {
     SharedPref sharedPref;
     ImageButton image_favorite, btn_share;
     private String str_vid;
-    AdsPref adsPref;
-    AdNetwork adNetwork;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +83,6 @@ public class ActivityNotificationDetail extends AppCompatActivity {
         setContentView(R.layout.activity_video_detail);
 
         sharedPref = new SharedPref(this);
-        adsPref = new AdsPref(this);
-        adNetwork = new AdNetwork(this);
 
         if (AppConfig.ENABLE_RTL_MODE) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -139,8 +130,6 @@ public class ActivityNotificationDetail extends AppCompatActivity {
         });
 
         initToolbar();
-        adNetwork.loadBannerAdNetwork(BANNER_POST_DETAIL);
-        adNetwork.loadNativeAdNetwork(NATIVE_AD_POST_DETAIL);
 
     }
 

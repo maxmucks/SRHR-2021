@@ -22,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.deafop.srhr_signlanguage.R;
 import org.deafop.srhr_signlanguage.activities.ActivityVideoDetail;
 import org.deafop.srhr_signlanguage.activities.ActivityVideoDetailOffline;
-import org.deafop.srhr_signlanguage.activities.MainActivity;
 import org.deafop.srhr_signlanguage.adapters.AdapterFavorite;
 import org.deafop.srhr_signlanguage.databases.DatabaseHandlerFavorite;
 import org.deafop.srhr_signlanguage.models.Video;
@@ -68,11 +67,6 @@ public class FragmentRefferal extends Fragment {
         mAdapterFavorite = new AdapterFavorite(getActivity(), recyclerView, data);
         recyclerView.setAdapter(mAdapterFavorite);
 
-/*        if (data.size() == 0) {
-            linearLayout.setVisibility(View.VISIBLE);
-        } else {
-            linearLayout.setVisibility(View.INVISIBLE);
-        }*/
 
         return root_view;
     }
@@ -98,8 +92,6 @@ public class FragmentRefferal extends Fragment {
                 intent.putExtra(Constant.EXTRA_OBJC, obj);
                 startActivity(intent);
 
-                if (getActivity() != null)
-                    ((MainActivity) getActivity()).showInterstitialAd();
             } else {
                 Intent intent = new Intent(getActivity(), ActivityVideoDetailOffline.class);
                 intent.putExtra(Constant.POSITION, position);
@@ -182,11 +174,6 @@ public class FragmentRefferal extends Fragment {
 
         });
 
-/*        if (data.size() == 0) {
-            linearLayout.setVisibility(View.VISIBLE);
-        } else {
-            linearLayout.setVisibility(View.INVISIBLE);
-        }*/
     }
 
     public void refreshFragment() {

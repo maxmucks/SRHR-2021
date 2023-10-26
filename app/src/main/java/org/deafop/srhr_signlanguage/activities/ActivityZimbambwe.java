@@ -41,7 +41,7 @@ public class ActivityZimbambwe extends AppCompatActivity {
         zimbambwe.setItemAnimator(new DefaultItemAnimator());
         data = new ArrayList<>();
         for (int i = 0; i < ZimData.nameArray.length; i++) {
-            data.add(new Zimbambwe(ZimData.nameArray[i], ZimData.id_[i].intValue(), ZimData.drawableArray[i].intValue()));
+            data.add(new Zimbambwe(ZimData.nameArray[i], ZimData.id_[i], ZimData.drawableArray[i]));
         }
         ZimbambweAdapter zimbambweAdapter = new ZimbambweAdapter(data);
         adapter = zimbambweAdapter;

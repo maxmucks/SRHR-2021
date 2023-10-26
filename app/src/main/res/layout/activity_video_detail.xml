@@ -121,8 +121,6 @@
 
                         <include layout="@layout/include_video_detail" />
 
-                        <include layout="@layout/include_native_ad_default" />
-
                         <RelativeLayout
                             android:id="@+id/lyt_suggested"
                             android:layout_width="match_parent"
@@ -167,12 +165,5 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <include
-        android:id="@+id/lyt_banner_ad"
-        layout="@layout/include_banner_ad"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true" />
 
 </RelativeLayout>

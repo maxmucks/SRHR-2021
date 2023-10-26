@@ -1,7 +1,5 @@
 package org.deafop.srhr_signlanguage.activities;
 
-import static org.deafop.srhr_signlanguage.utils.Constant.BANNER_CATEGORY_DETAIL;
-import static org.deafop.srhr_signlanguage.utils.Constant.INTERSTITIAL_POST_LIST;
 import static org.deafop.srhr_signlanguage.utils.Constant.VIDEO_LIST_COMPACT;
 
 import android.content.Intent;
@@ -21,12 +19,11 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.appbar.AppBarLayout;
-import org.deafop.srhr_signlanguage.R;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.deafop.srhr_signlanguage.R;
 import org.deafop.srhr_signlanguage.adapters.AdapterRecent;
 import org.deafop.srhr_signlanguage.callbacks.CallbackCategoryDetails;
 import org.deafop.srhr_signlanguage.config.AppConfig;
@@ -34,12 +31,14 @@ import org.deafop.srhr_signlanguage.models.Category;
 import org.deafop.srhr_signlanguage.models.Video;
 import org.deafop.srhr_signlanguage.rests.ApiInterface;
 import org.deafop.srhr_signlanguage.rests.RestAdapter;
-import org.deafop.srhr_signlanguage.utils.AdNetwork;
-import org.deafop.srhr_signlanguage.utils.AdsPref;
 import org.deafop.srhr_signlanguage.utils.AppBarLayoutBehavior;
 import org.deafop.srhr_signlanguage.utils.Constant;
 import org.deafop.srhr_signlanguage.utils.SharedPref;
 import org.deafop.srhr_signlanguage.utils.Tools;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,8 +54,6 @@ public class ActivityVideoByCategory extends AppCompatActivity {
     private Category category;
     SharedPref sharedPref;
     private ShimmerFrameLayout lyt_shimmer;
-    AdsPref adsPref;
-    AdNetwork adNetwork;
     View view;
 
     @Override
@@ -69,10 +66,6 @@ public class ActivityVideoByCategory extends AppCompatActivity {
         sharedPref = new SharedPref(this);
         sharedPref.setDefaultSortVideos();
 
-        adsPref = new AdsPref(this);
-        adNetwork = new AdNetwork(this);
-        adNetwork.loadBannerAdNetwork(BANNER_CATEGORY_DETAIL);
-        adNetwork.loadInterstitialAdNetwork(INTERSTITIAL_POST_LIST);
 
         AppBarLayout appBarLayout = findViewById(R.id.appbarLayout);
         ((CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams()).setBehavior(new AppBarLayoutBehavior());
@@ -106,8 +99,6 @@ public class ActivityVideoByCategory extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), ActivityVideoDetail.class);
             intent.putExtra(Constant.EXTRA_OBJC, obj);
             startActivity(intent);
-
-            adNetwork.showInterstitialAdNetwork(INTERSTITIAL_POST_LIST, adsPref.getInterstitialAdInterval());
         });
         // detect when scroll reach bottom
         adapterRecent.setOnLoadMoreListener(current_page -> {

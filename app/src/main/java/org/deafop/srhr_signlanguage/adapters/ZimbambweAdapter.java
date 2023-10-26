@@ -21,8 +21,8 @@ public class ZimbambweAdapter extends RecyclerView.Adapter<ZimbambweAdapter.MyVi
 
         public MyViewHolder(View view) {
             super(view);
-            this.textViewName = (TextView) view.findViewById(R.id.textViewName);
-            this.imageViewIcon = (ImageView) view.findViewById(R.id.imageView);
+            this.textViewName = view.findViewById(R.id.textViewName);
+            this.imageViewIcon = view.findViewById(R.id.imageView);
         }
     }
 

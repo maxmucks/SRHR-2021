@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,10 +22,14 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.multidex.BuildConfig;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.deafop.srhr_signlanguage.R;
 import org.deafop.srhr_signlanguage.config.AppConfig;
@@ -35,30 +38,12 @@ import org.deafop.srhr_signlanguage.fragments.FragmentFavorite;
 import org.deafop.srhr_signlanguage.fragments.FragmentRecent;
 import org.deafop.srhr_signlanguage.fragments.FragmentRefferal;
 import org.deafop.srhr_signlanguage.fragments.FragmentSettings;
-import org.deafop.srhr_signlanguage.utils.AdNetwork;
-import org.deafop.srhr_signlanguage.utils.AdsPref;
 import org.deafop.srhr_signlanguage.utils.AppBarLayoutBehavior;
-import org.deafop.srhr_signlanguage.utils.GDPR;
 import org.deafop.srhr_signlanguage.utils.RtlViewPager;
 import org.deafop.srhr_signlanguage.utils.SharedPref;
 import org.deafop.srhr_signlanguage.utils.Tools;
 
-import com.applovin.sdk.AppLovinMediationProvider;
-import com.applovin.sdk.AppLovinSdk;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.AdapterStatus;
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.bottomnavigation.LabelVisibilityMode;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
-import com.startapp.sdk.adsbase.StartAppAd;
-import com.startapp.sdk.adsbase.StartAppSDK;
-
-import org.deafop.srhr_signlanguage.utils.Constant;
-
 import java.io.File;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -72,14 +57,12 @@ public class MainActivity extends AppCompatActivity {
     MenuItem prevMenuItem;
     int pager_number = 4;
     //    SharedPreferences preferences;
-    AdNetwork adNetwork;
     View view;
     //    String androidId;
     ImageButton btn_search;
     SharedPref sharedPref;
     public ImageButton btn_sort;
     CoordinatorLayout coordinatorLayout;
-    AdsPref adsPref;
     FloatingActionButton pDF;
     ImageButton btn_countries;
     FloatingActionButton chat_us;
@@ -89,11 +72,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Tools.getTheme(this);
         sharedPref = new SharedPref(this);
-        adsPref = new AdsPref(this);
-        if (adsPref.getAdStatus().equals(Constant.AD_STATUS_ON) && adsPref.getAdType().equals(Constant.STARTAPP)) {
-            StartAppSDK.init(MainActivity.this, adsPref.getStartappAppID(), false);
-            StartAppSDK.setTestAdsEnabled(BuildConfig.DEBUG);
-        }
         if (AppConfig.ENABLE_RTL_MODE) {
             setContentView(R.layout.activity_main_rtl);
         } else {
@@ -104,79 +82,38 @@ public class MainActivity extends AppCompatActivity {
             getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
 
-        if (adsPref.getAdStatus().equals(Constant.AD_STATUS_ON)) {
-            switch (adsPref.getAdType()) {
-                case Constant.STARTAPP:
-                    StartAppSDK.setUserConsent(this, "pas", System.currentTimeMillis(), true);
-                    StartAppAd.disableSplash();
-                    break;
-                case Constant.ADMOB:
-                    MobileAds.initialize(this, initializationStatus -> {
-                        Map<String, AdapterStatus> statusMap = initializationStatus.getAdapterStatusMap();
-                        for (String adapterClass : statusMap.keySet()) {
-                            AdapterStatus status = statusMap.get(adapterClass);
-                            assert status != null;
-                            Log.d("MyApp", String.format("Adapter name: %s, Description: %s, Latency: %d", adapterClass, status.getDescription(), status.getLatency()));
-                            Log.d("Open Bidding", "FAN open bidding with AdMob as mediation partner selected");
-                        }
-                    });
-                    GDPR.updateConsentStatus(this);
-                    break;
-                case Constant.APPLOVIN:
-                    AppLovinSdk.getInstance(this).setMediationProvider(AppLovinMediationProvider.MAX);
-                    AppLovinSdk.getInstance(this).initializeSdk(config -> {
-                    });
-                    final String sdkKey = AppLovinSdk.getInstance(getApplicationContext()).getSdkKey();
-                    if (!sdkKey.equals(getString(R.string.applovin_sdk_key))) {
-                        Log.e(TAG, "AppLovin ERROR : Please update your sdk key in the manifest file.");
-                    }
-                    Log.d(TAG, "AppLovin SDK Key : " + sdkKey);
-                    break;
-            }
-        }
-        btn_countries = (ImageButton) findViewById(R.id.btn_countries);
-        btn_countries.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-
-                startActivity(new Intent(getApplicationContext(), ActivityCountries.class));
-            }
-        });
+        btn_countries = findViewById(R.id.btn_countries);
+        btn_countries.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), ActivityCountries.class)));
         chat_us = findViewById(R.id.chatUs);
-        chat_us.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                String str = "https://api.whatsapp.com/send?phone=" + "+254 739890070";
-                try {
-                    MainActivity.this.getApplicationContext().getPackageManager().getPackageInfo("com.whatsapp", 1);
-                } catch (PackageManager.NameNotFoundException ex) {
-                    Toast.makeText(MainActivity.this, "Whatsapp app not installed in your phone", Toast.LENGTH_SHORT).show();
-                    ex.printStackTrace();
-                }
-                Intent intent = new Intent("android.intent.action.VIEW");
-                intent.setData(Uri.parse(str));
-                startActivity(intent);
-
+        chat_us.setOnClickListener(view -> {
+            String str = "https://api.whatsapp.com/send?phone=" + "+254 739890070";
+            try {
+                MainActivity.this.getApplicationContext().getPackageManager().getPackageInfo("com.whatsapp", 1);
+            } catch (PackageManager.NameNotFoundException ex) {
+                Toast.makeText(MainActivity.this, "Whatsapp app not installed in your phone", Toast.LENGTH_SHORT).show();
+                ex.printStackTrace();
             }
+            Intent intent = new Intent("android.intent.action.VIEW");
+            intent.setData(Uri.parse(str));
+            startActivity(intent);
+
         });
         pDF = findViewById(R.id.pDF);
-        pDF.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                Snackbar.make(MainActivity.this.view, (CharSequence) "PDF", BaseTransientBottomBar.LENGTH_LONG).setAction((CharSequence) "Action", (View.OnClickListener) null).show();
-                if (new File(MainActivity.this.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS) + "/App_Script.pdf").exists()) {
-                    Toast.makeText(MainActivity.this, "Exists", Toast.LENGTH_SHORT).show();
-                    File file = new File(MainActivity.this.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS) + "/App_Script.pdf");
-                    MainActivity mainActivity = MainActivity.this;
-                    Uri uriForFile = FileProvider.getUriForFile(mainActivity, MainActivity.this.getApplicationContext().getPackageName() + ".provider", file);
-                    Intent intent = new Intent("android.intent.action.VIEW");
-                    intent.setDataAndType(uriForFile, "application/pdf");
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    try {
-                        startActivity(intent);
-                    } catch (ActivityNotFoundException unused) {
-                        Toast.makeText(MainActivity.this, "No Application available to view PDF", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    //  downloadAndOpenPDF();
+        pDF.setOnClickListener(view -> {
+            Snackbar.make(MainActivity.this.view, "PDF", BaseTransientBottomBar.LENGTH_LONG).setAction("Action", null).show();
+            if (new File(MainActivity.this.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS) + "/App_Script.pdf").exists()) {
+                Toast.makeText(MainActivity.this, "Exists", Toast.LENGTH_SHORT).show();
+                File file = new File(MainActivity.this.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS) + "/App_Script.pdf");
+                MainActivity mainActivity = MainActivity.this;
+                Uri uriForFile = FileProvider.getUriForFile(mainActivity, MainActivity.this.getApplicationContext().getPackageName() + ".provider", file);
+                Intent intent = new Intent("android.intent.action.VIEW");
+                intent.setDataAndType(uriForFile, "application/pdf");
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException unused) {
+                    Toast.makeText(MainActivity.this, "No Application available to view PDF", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -203,23 +140,10 @@ public class MainActivity extends AppCompatActivity {
         Tools.notificationOpenHandler(this, getIntent());
         Tools.getCategoryPosition(this, getIntent());
 
-        adNetwork = new AdNetwork(this);
-        adNetwork.loadBannerAdNetwork(Constant.BANNER_HOME);
-        adNetwork.loadInterstitialAdNetwork(Constant.INTERSTITIAL_POST_LIST);
-
         initToolbarIcon();
 
     }
 
-    private void pDDFDownload() {
-
-        String URL = "http://deafopkenyavideos.deafopkenya.org/videos/APP_SCRIPT.pdf";
-
-    }
-
-    public void showInterstitialAd() {
-        adNetwork.showInterstitialAdNetwork(Constant.INTERSTITIAL_POST_LIST, adsPref.getInterstitialAdInterval());
-    }
 
     public void initViewPager() {
         viewPager = findViewById(R.id.viewpager);

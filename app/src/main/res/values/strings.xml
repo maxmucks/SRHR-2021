@@ -11,7 +11,6 @@
 
     <!-- play store application link i.e more apps -->
     <string name="play_more_apps">https://play.google.com/store/apps/developer?id=Deafop+Kenya</string>
-    <string name="privacy_policy_url">https://privacypolicies.com/privacy/view/c51c78f03631c7591d817e9d0c30c84c</string>
 
     <!--settings-->
     <string name="title_setting_theme">Dark Theme</string>
@@ -45,14 +44,12 @@
     <string name="no_post_found">No Videos Found! if you want to continue search, please try enter another keyword!</string>
     <string name="msg_no_item">it looks like there are no content available at this time.</string>
     <string name="msg_search_input">Please Insert Keyword</string>
-    <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
 
     <!--favorite-->
     <string name="favorite_add">Add to Favorite</string>
     <string name="favorite_remove">Remove Favorite</string>
     <string name="favorite_added">Added to Favorite</string>
     <string name="favorite_removed">Removed from Favorite</string>
-    <string name="no_favorite_found">Your favorite list is empty because you don\'t add any videos in the favorite menu</string>
 
     <!--sort-->
     <string name="title_sort">Videos sorted by</string>
@@ -74,19 +71,13 @@
     <string name="search_text">Search&#8230;</string>
     <string name="txt_suggested">Suggested</string>
     <string name="press_again_to_exit">Press again to exit app</string>
-    <string name="playOnline">Do you want to Download or Play Online?</string>
 
-    <string name="first_instruct">Please Login Or Skip</string>
-    <string name="first_name">Enter Your Name</string>
-    <string name="first_phone">Enter Phone Number</string>
     <string name="btn_clear">Clear</string>
 
     <string name="country">Country</string>
     <string name="title_nav_referal">Referral Centers</string>
 
     <string name="no_refferal_found" >Coming Soon</string>
-    <string name="login">Login</string>
-    <string name="skip">Skip</string>
 
 
 </resources>

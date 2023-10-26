@@ -1,25 +1,14 @@
 package org.deafop.srhr_signlanguage.activities;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.DownloadManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.util.SparseArray;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,14 +25,11 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.app.ActivityCompat;
 import androidx.multidex.BuildConfig;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.droidhubworld.dialoglib.DefaultConstants;
-import com.droidhubworld.dialoglib.messagedialog.CommonMessageDialog;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.snackbar.Snackbar;
@@ -54,8 +40,6 @@ import org.deafop.srhr_signlanguage.config.AppConfig;
 import org.deafop.srhr_signlanguage.databases.DatabaseHandlerFavorite;
 import org.deafop.srhr_signlanguage.models.Video;
 import org.deafop.srhr_signlanguage.rests.RestAdapter;
-import org.deafop.srhr_signlanguage.utils.AdNetwork;
-import org.deafop.srhr_signlanguage.utils.AdsPref;
 import org.deafop.srhr_signlanguage.utils.AppBarLayoutBehavior;
 import org.deafop.srhr_signlanguage.utils.Constant;
 import org.deafop.srhr_signlanguage.utils.SharedPref;
@@ -67,17 +51,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.ocpsoft.prettytime.PrettyTime;
 
-import java.io.File;
 import java.util.Date;
 import java.util.List;
 
-import at.huber.youtubeExtractor.YouTubeUriExtractor;
-import at.huber.youtubeExtractor.YtFile;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.os.Environment.DIRECTORY_DOWNLOADS;
 
 public class ActivityVideoDetail extends AppCompatActivity {
 
@@ -95,12 +74,6 @@ public class ActivityVideoDetail extends AppCompatActivity {
     private SwipeRefreshLayout swipe_refresh;
     SharedPref sharedPref;
     ImageButton image_favorite, btn_share;
-    AdsPref adsPref;
-    AdNetwork adNetwork;
-    String youTubeURL = null;
-
-    String WritePermission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
-    String ReadPermission = Manifest.permission.READ_EXTERNAL_STORAGE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,8 +82,6 @@ public class ActivityVideoDetail extends AppCompatActivity {
         setContentView(R.layout.activity_video_detail);
 
         sharedPref = new SharedPref(this);
-        adsPref = new AdsPref(this);
-        adNetwork = new AdNetwork(this);
 
         if (AppConfig.ENABLE_RTL_MODE) {
             getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
@@ -155,9 +126,6 @@ public class ActivityVideoDetail extends AppCompatActivity {
         });
 
         initToolbar();
-
-        adNetwork.loadBannerAdNetwork(Constant.BANNER_POST_DETAIL);
-        adNetwork.loadNativeAdNetwork(Constant.NATIVE_AD_POST_DETAIL);
 
     }
 
@@ -326,79 +294,6 @@ public class ActivityVideoDetail extends AppCompatActivity {
         new Handler(Looper.getMainLooper()).postDelayed(() -> lyt_suggested.setVisibility(View.VISIBLE), 1000);
 
     }
-/*    private void showCustomDialog() {
-        CommonMessageDialog dialog = new CommonMessageDialog.Builder(this)
-                .title("SRHR Sign Language")
-                .titleGravity(Gravity.CENTER)
-                .titleSize(22)
-                .cornerRadius(5.0f)
-                .titleColor(R.color.black)
-                .messageColor(R.color.black)
-                .message("Do you want to download or view online?")
-                .messageGravity(Gravity.START | Gravity.CENTER_VERTICAL)
-                .messageSize(18)
-                .buttonTextSize(16)
-                .buttonTypeface(Typeface.NORMAL)
-                .titleTypeface(Typeface.BOLD)
-                .messageTypeface(Typeface.NORMAL)
-                .showNegativeButton(true)
-                .negativeButtonText("Online")
-                .positiveButtonText("Download")
-                .iconTitleMaxHeight(32)
-                .iconTitleMaxWidth(32)
-                .iconTitleMinHeight(18)
-                .iconTitleMinWidth(18)
-                .iconTitleThinColor(getResources().getColor(R.color.colorPrimary))
-                .titleIcon(getResources().getDrawable(R.drawable.ic_success))
-                .titleBackgroundDrawable(getResources().getDrawable(R.drawable.title_gradient_bg))
-                .backgroundColor(getResources().getColor(R.color.colorPrimary))
-                .positiveButtonDrawable(getResources().getDrawable(R.drawable.default_button_selector))
-                .negativeButtonDrawable(getResources().getDrawable(R.drawable.default_button_selector))
-                .positiveButtonTextColor(getResources().getColor(R.color.colorWhite))
-                .negativeButtonTextColor(getResources().getColor(R.color.colorWhite))
-                .cancelable(true)
-                .dialogWindowWidth(0.9f)
-                //.dialogWindowHeight(0.3f)
-                .style(R.style.dialogStyle)
-                .buttonDividerColor(R.color.divider)
-                .buttonDividerWeight(1)
-                .showButtonDivider(true)
-                .callBack((isPositive, viewTag) -> {
-                    Log.e("CLICK ON : ", viewTag.toString());
-                    switch (viewTag.toString()) {
-                        case DefaultConstants.POSITIVE_BUTTON_TAG:
-                            if (post.video_type != null && post.video_type.equals("youtube")) {
-                                openPlay(18);
-                            }
-                            break;
-                        case DefaultConstants.NEGATIVE_BUTTON_TAG:
-                            if (Tools.isNetworkAvailable(ActivityVideoDetail.this)) {
-
-                                if (post.video_type != null && post.video_type.equals("youtube")) {
-                                    Intent intent = new Intent(getApplicationContext(), ActivityYoutubePlayer.class);
-                                    intent.putExtra(Constant.KEY_VIDEO_ID, post.video_id);
-                                    startActivity(intent);
-                                } else if (post.video_type != null && post.video_type.equals("Upload")) {
-                                    Intent intent = new Intent(getApplicationContext(), ActivityVideoPlayer.class);
-                                    intent.putExtra("url", sharedPref.getApiUrl() + "/upload/video/" + post.video_url);
-                                    startActivity(intent);
-                                } else {
-                                    Intent intent = new Intent(getApplicationContext(), ActivityVideoPlayer.class);
-                                    intent.putExtra("url", post.video_url);
-                                    startActivity(intent);
-                                }
-
-                                loadViewed();
-
-                            } else {
-                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.network_required), Toast.LENGTH_SHORT).show();
-                            }
-
-                            break;
-                    }
-                }).build();
-        dialog.show("Dialog");
-    }*/
     private void displaySuggested(List<Video> list) {
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view_suggested);
@@ -441,44 +336,6 @@ public class ActivityVideoDetail extends AppCompatActivity {
         txt_category.setText(post.category_name);
 
     }
-/*    public void YouTubeVideoDownloadF(int iTag){
-
-        if (ActivityCompat.checkSelfPermission(this, WritePermission) != PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(this, ReadPermission) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{WritePermission, ReadPermission}, 1);
-        } else {
-
-            YTDownload(iTag);
-        }
-    }*/
- /*   public void YTDownload(final int itag) {
-        String VideoURLDownload = youTubeURL;
-        @SuppressLint("StaticFieldLeak") YouTubeUriExtractor youTubeUriExtractor = new YouTubeUriExtractor(this) {
-            @Override
-            public void onUrisAvailable(String videoId, final String videoTitle, SparseArray<YtFile> ytFiles) {
-                if ((ytFiles != null)) {
-                    String downloadURL = ytFiles.get(itag).getUrl();
-                    Log.e("Download URL: ", downloadURL);
-                    if(itag==18 || itag == 22) {
-                        String mp4=".mp4";
-                        DownloadManagingF(downloadURL, videoTitle,mp4);
-
-                    }else if (itag == 251){
-                        String mp3=".mp3";
-                        DownloadManagingF(downloadURL,videoTitle,mp3);
-                    }
-
-                } else Toast.makeText(ActivityVideoDetail.this, "Error With URL", Toast.LENGTH_LONG).show();
-            }
-        };
-        youTubeUriExtractor.execute(VideoURLDownload);
-
-    }*/
-/*    public void ytvdownload(View view ) {
-            if (youTubeURL.contains("http")) {
-                YouTubeVideoDownloadF(18);
-            }
-    }*/
     public void playVideo(){
 
         if (Tools.isNetworkAvailable(ActivityVideoDetail.this)) {
@@ -503,81 +360,6 @@ public class ActivityVideoDetail extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.network_required), Toast.LENGTH_SHORT).show();
         }
     }
-  /*  public void openPlay(int itag){
-        youTubeURL = post.video_url;
-        String VideoURLDownload = youTubeURL;
-        @SuppressLint("StaticFieldLeak") YouTubeUriExtractor youTubeUriExtractor = new YouTubeUriExtractor(this) {
-            @Override
-            public void onUrisAvailable(String videoId, final String videoTitle, SparseArray<YtFile> ytFiles) {
-                if ((ytFiles != null)) {
-                    String downloadURL = ytFiles.get(itag).getUrl();
-                    Log.e("Download URL: ", downloadURL);
-                    if(itag==18 || itag == 22) {
-                        final String vidFilename = videoTitle + ".mp4";
-                        File file = new File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)+File.separator+ vidFilename);
-                        if (file.exists()){
-                            Toast.makeText(getApplicationContext(), DIRECTORY_DOWNLOADS + vidFilename + "/n exists", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(), ActivityVideoPlayer.class);
-                            intent.putExtra("url", file.toString());
-                            startActivity(intent);
-
-                    }else if (itag == 251){
-
-                        } else {
-                            ytvdownload(null);
-
-                        }
-                    }
-
-
-                }
-            }
-        };
-
-       youTubeUriExtractor.execute(VideoURLDownload);
-
-
-
-    }*/
-   /* public void DownloadManagingF(String downloadURL, String videoTitle,String extentiondwn){
-
-        if (downloadURL != null) {
-            DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(downloadURL));
-            request.setTitle(videoTitle);
-            request.setDescription("Downloading");
-            request.setDestinationInExternalFilesDir(getApplicationContext(),DIRECTORY_DOWNLOADS, videoTitle + extentiondwn);
-            if (downloadManager != null) {
-                Toast.makeText(getApplicationContext(),"Downloading...",Toast.LENGTH_SHORT).show();
-                downloadManager.enqueue(request);
-
-            }
-            BroadcastReceiver onComplete = new BroadcastReceiver() {
-                public void onReceive(Context ctxt, Intent intent) {
-                    Toast.makeText(getApplicationContext(),"Download Completed",Toast.LENGTH_SHORT).show();
-
-                    Uri selectedUri = Uri.parse(Environment.getExternalStorageDirectory() + DIRECTORY_DOWNLOADS);
-                    Intent intentop = new Intent(Intent.ACTION_VIEW);
-                    intentop.setDataAndType(selectedUri, "resource/folder");
-
-                    if (intentop.resolveActivityInfo(getPackageManager(), 0) != null)
-                    {
-                        startActivity(intentop);
-                    }
-                    else
-                    {
-                        Toast.makeText(getApplicationContext(),"Saved on: Downloads",Toast.LENGTH_LONG).show();
-                        // restartApp();
-                    }
-                    unregisterReceiver(this);
-                    finish();
-                }
-            };
-            registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
-
-        }
-
-    }*/
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);

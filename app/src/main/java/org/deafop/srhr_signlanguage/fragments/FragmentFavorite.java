@@ -20,13 +20,9 @@ import org.deafop.srhr_signlanguage.adapters.AdapterFilms;
 import org.deafop.srhr_signlanguage.databases.DatabaseHandlerFavorite;
 import org.deafop.srhr_signlanguage.models.Films;
 import org.deafop.srhr_signlanguage.models.FilmsData;
-import org.deafop.srhr_signlanguage.models.UgData;
-import org.deafop.srhr_signlanguage.models.Uganda;
-import org.deafop.srhr_signlanguage.models.Video;
 import org.deafop.srhr_signlanguage.utils.SharedPref;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class FragmentFavorite extends Fragment {
 
@@ -69,12 +65,6 @@ public class FragmentFavorite extends Fragment {
         }
         AdapterFilms adapterFilms1 = new AdapterFilms(data);
         recyclerView.setAdapter(adapterFilms1);
- /*       if (data.size() == 0) {
-            linearLayout.setVisibility(View.VISIBLE);
-        } else {
-            linearLayout.setVisibility(View.INVISIBLE);
-        }*/
-
         return root_view;
     }
 

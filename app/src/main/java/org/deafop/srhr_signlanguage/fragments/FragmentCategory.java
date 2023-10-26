@@ -20,9 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
+
 import org.deafop.srhr_signlanguage.R;
 import org.deafop.srhr_signlanguage.activities.ActivityVideoByCategory;
-import org.deafop.srhr_signlanguage.activities.MainActivity;
 import org.deafop.srhr_signlanguage.adapters.AdapterCategory;
 import org.deafop.srhr_signlanguage.callbacks.CallbackCategories;
 import org.deafop.srhr_signlanguage.config.AppConfig;
@@ -34,7 +35,6 @@ import org.deafop.srhr_signlanguage.utils.EqualSpacingItemDecoration;
 import org.deafop.srhr_signlanguage.utils.ItemOffsetDecoration;
 import org.deafop.srhr_signlanguage.utils.SharedPref;
 import org.deafop.srhr_signlanguage.utils.Tools;
-import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,7 +96,6 @@ public class FragmentCategory extends Fragment {
             intent.putExtra(EXTRA_OBJC, obj);
             startActivity(intent);
 
-            ((MainActivity) getActivity()).showInterstitialAd();
         });
 
         // on swipe list

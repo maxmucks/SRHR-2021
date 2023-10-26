@@ -123,11 +123,6 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
-        <include
-            android:id="@+id/lyt_banner_ad"
-            layout="@layout/include_banner_ad"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/navigation"

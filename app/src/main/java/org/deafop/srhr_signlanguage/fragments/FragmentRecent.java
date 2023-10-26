@@ -87,8 +87,6 @@ public class FragmentRecent extends Fragment {
             intent.putExtra(Constant.EXTRA_OBJC, obj);
             startActivity(intent);
 
-            ((MainActivity) getActivity()).showInterstitialAd();
-
         });
 
         // detect when scroll reach bottom

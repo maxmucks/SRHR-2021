@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.deafop.srhr_signlanguage.R;
 import org.deafop.srhr_signlanguage.config.AppConfig;
-import org.deafop.srhr_signlanguage.utils.AdsPref;
 import org.deafop.srhr_signlanguage.utils.Constant;
 import org.deafop.srhr_signlanguage.utils.CustomWebChromeClient;
 
@@ -25,7 +24,6 @@ public class ActivityYoutubePlayer extends AppCompatActivity {
     private static final int RECOVERY_REQUEST = 1;
     private WebView youTube;
     private String str_video_id;
-    AdsPref adsPref;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -35,7 +33,6 @@ public class ActivityYoutubePlayer extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_youtube);
 
-        adsPref = new AdsPref(this);
 
         if (AppConfig.FORCE_PLAYER_TO_LANDSCAPE) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);

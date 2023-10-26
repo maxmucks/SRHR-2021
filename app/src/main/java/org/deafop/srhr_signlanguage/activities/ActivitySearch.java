@@ -28,8 +28,6 @@ import org.deafop.srhr_signlanguage.callbacks.CallbackListVideo;
 import org.deafop.srhr_signlanguage.config.AppConfig;
 import org.deafop.srhr_signlanguage.rests.ApiInterface;
 import org.deafop.srhr_signlanguage.rests.RestAdapter;
-import org.deafop.srhr_signlanguage.utils.AdNetwork;
-import org.deafop.srhr_signlanguage.utils.AdsPref;
 import org.deafop.srhr_signlanguage.utils.Constant;
 import org.deafop.srhr_signlanguage.utils.SharedPref;
 import org.deafop.srhr_signlanguage.utils.Tools;
@@ -51,8 +49,6 @@ public class ActivitySearch extends AppCompatActivity {
     private Call<CallbackListVideo> callbackCall = null;
     SharedPref sharedPref;
     private ShimmerFrameLayout lyt_shimmer;
-    AdsPref adsPref;
-    AdNetwork adNetwork;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +58,6 @@ public class ActivitySearch extends AppCompatActivity {
         view = findViewById(android.R.id.content);
 
         sharedPref = new SharedPref(this);
-        adsPref = new AdsPref(this);
-        adNetwork = new AdNetwork(this);
 
         if (AppConfig.ENABLE_RTL_MODE) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -71,8 +65,6 @@ public class ActivitySearch extends AppCompatActivity {
             }
         }
 
-        adNetwork.loadBannerAdNetwork(Constant.BANNER_SEARCH);
-        adNetwork.loadInterstitialAdNetwork(Constant.INTERSTITIAL_POST_LIST);
 
         et_search = findViewById(R.id.et_search);
         bt_clear = findViewById(R.id.bt_clear);
@@ -109,8 +101,6 @@ public class ActivitySearch extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), ActivityVideoDetail.class);
             intent.putExtra(Constant.EXTRA_OBJC, obj);
             startActivity(intent);
-
-            adNetwork.showInterstitialAdNetwork(Constant.INTERSTITIAL_POST_LIST, adsPref.getInterstitialAdInterval());
         });
 
         setupToolbar();
