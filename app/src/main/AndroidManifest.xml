@@ -10,8 +10,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission
         android:name="com.google.android.gms.permission.AD_ID"
-        tools:node="remove"/>
-
+        tools:node="remove" />
 
     <application
         android:name=".activities.MyApplication"
@@ -22,7 +21,11 @@
         android:networkSecurityConfig="@xml/network_config"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true">
+        <activity
+            android:name=".activities.pdf"
+            android:exported="false" />
         <activity
             android:name=".activities.ActivityCountries"
             android:exported="false">
@@ -30,7 +33,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".activities.ActivitySplash"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -44,8 +46,7 @@
         <activity
             android:name=".activities.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".activities.ActivityVideoDetailOffline"
             android:configChanges="orientation|keyboardHidden|screenSize" />
@@ -63,7 +64,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
             android:name=".activities.ActivityYoutubePlayer"
-            android:configChanges="orientation|screenSize|keyboardHidden|screenSize"/>
+            android:configChanges="orientation|screenSize|keyboardHidden|screenSize" />
         <activity
             android:name=".activities.ActivityVideoDetail"
             android:configChanges="orientation|keyboardHidden|screenSize" />
@@ -85,7 +86,7 @@
             android:value="@integer/google_play_services_version" />
 
         <service
-            android:name="org.deafop.srhr_signlanguage.notification.MyFirebaseMessageService"
+            android:name=".notification.MyFirebaseMessageService"
             android:enabled="true"
             android:exported="false">
             <intent-filter>

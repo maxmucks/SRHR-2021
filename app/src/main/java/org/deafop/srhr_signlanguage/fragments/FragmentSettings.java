@@ -70,7 +70,7 @@ public class FragmentSettings extends Fragment {
         changeCategoryListViewType();
 
         root_view.findViewById(R.id.btn_privacy_policy).setOnClickListener(view -> startActivity(new Intent(getActivity(), ActivityPrivacyPolicy.class)));
-        root_view.findViewById(R.id.btn_rate).setOnClickListener(view -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID))));
+        root_view.findViewById(R.id.btn_rate).setOnClickListener(view -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=org.deafop.srhr_signlanguage"))));
         root_view.findViewById(R.id.btn_more).setOnClickListener(view -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.play_more_apps)))));
         root_view.findViewById(R.id.btn_about).setOnClickListener(view -> aboutDialog());
     }

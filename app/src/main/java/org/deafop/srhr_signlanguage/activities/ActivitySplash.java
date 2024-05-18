@@ -108,6 +108,6 @@ public class ActivitySplash extends AppCompatActivity {
     private void launchFirstTime() {
         Intent intent = new Intent(getApplicationContext(), FirstTime.class);
         startActivity(intent);
-        new Handler(Looper.getMainLooper()).postDelayed(this::finish, 5000);
+        new Handler(Looper.getMainLooper()).postDelayed(this::finish, 3000);
     }
 }
